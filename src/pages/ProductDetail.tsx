@@ -126,7 +126,9 @@ export function ProductDetail() {
               <span className="font-body text-[12.5px] tracking-wide uppercase text-espresso">
                 Size {size ? `— ${size}` : ''}
               </span>
-              <span className="font-body text-[12.5px] text-sage underline cursor-pointer">Size Guide</span>
+              <Link to="/size-guide" className="font-body text-[12.5px] text-sage underline focus-visible:outline-2 focus-visible:outline-sage">
+                Size Guide
+              </Link>
             </div>
             <div className="flex gap-2.5 flex-wrap">
               {product.sizes.map((s) => (

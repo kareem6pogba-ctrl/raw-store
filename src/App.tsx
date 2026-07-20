@@ -10,6 +10,7 @@ import { ProductDetail } from './pages/ProductDetail'
 import { Checkout } from './pages/Checkout'
 import { About } from './pages/About'
 import { FAQ, ShippingReturns } from './pages/Info'
+import { Contact, Privacy, Terms, SizeGuide } from './pages/Legal'
 import { NotFound } from './pages/NotFound'
 import { AdminLogin } from './pages/admin/AdminLogin'
 import { AdminLayout } from './pages/admin/AdminLayout'
@@ -41,6 +42,10 @@ export default function App() {
             <Route path="/about" element={<StoreLayout><About /></StoreLayout>} />
             <Route path="/faq" element={<StoreLayout><FAQ /></StoreLayout>} />
             <Route path="/shipping-returns" element={<StoreLayout><ShippingReturns /></StoreLayout>} />
+            <Route path="/contact" element={<StoreLayout><Contact /></StoreLayout>} />
+            <Route path="/privacy" element={<StoreLayout><Privacy /></StoreLayout>} />
+            <Route path="/terms" element={<StoreLayout><Terms /></StoreLayout>} />
+            <Route path="/size-guide" element={<StoreLayout><SizeGuide /></StoreLayout>} />
 
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>

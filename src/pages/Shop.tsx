@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
 import { useProducts } from '../lib/useProducts'
@@ -7,8 +7,15 @@ export function Shop() {
   const { products, loading } = useProducts()
   const [params] = useSearchParams()
   const query = params.get('q') ?? ''
-  const [category, setCategory] = useState('All')
+  const urlCategory = params.get('category')
+  const [category, setCategory] = useState(urlCategory && ['Tops', 'Bottoms', 'Sets'].includes(urlCategory) ? urlCategory : 'All')
   const [sort, setSort] = useState('newest')
+
+  useEffect(() => {
+    if (urlCategory && ['Tops', 'Bottoms', 'Sets'].includes(urlCategory)) {
+      setCategory(urlCategory)
+    }
+  }, [urlCategory])
 
   const cats = ['All', 'Tops', 'Bottoms', 'Sets']
 
