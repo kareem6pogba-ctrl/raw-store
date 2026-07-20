@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { Button } from '../../components/Button'
 import { ConfirmModal } from '../../components/ConfirmModal'
+import { ImageUploadField } from './ImageUploadField'
 import type { Product } from '../../types'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
@@ -202,8 +203,8 @@ function ProductForm({
           </div>
           <TextArea label="Description" value={form.description ?? ''} onChange={(v) => set('description', v)} />
           <TextField label="Fabric" value={form.fabric ?? ''} onChange={(v) => set('fabric', v)} />
-          <TextField label="Main Image URL" value={form.image_main ?? ''} onChange={(v) => set('image_main', v)} />
-          <TextField label="Alt Image URL" value={form.image_alt ?? ''} onChange={(v) => set('image_alt', v)} />
+          <ImageUploadField label="Main Image" value={form.image_main ?? ''} onChange={(v) => set('image_main', v)} />
+          <ImageUploadField label="Alternate/Hover Image" value={form.image_alt ?? ''} onChange={(v) => set('image_alt', v)} />
           <TextField label="Tag (e.g. New, Best Seller — optional)" value={form.tag ?? ''} onChange={(v) => set('tag', v)} />
           <TextField
             label="Sizes (comma-separated)"

@@ -190,3 +190,21 @@ create policy "admin read customers" on customers
 
 create policy "admin manage coupons" on coupons
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+-- ============================================================
+-- STORAGE — product image uploads (run this third block)
+-- Creates a public "products" bucket and permission policies:
+-- anyone can view images, only logged-in admins can upload.
+-- ============================================================
+insert into storage.buckets (id, name, public)
+values ('products', 'products', true)
+on conflict (id) do nothing;
+
+create policy "public read product images" on storage.objects
+  for select using (bucket_id = 'products');
+
+create policy "admin upload product images" on storage.objects
+  for insert with check (bucket_id = 'products' and auth.role() = 'authenticated');
+
+create policy "admin delete product images" on storage.objects
+  for delete using (bucket_id = 'products' and auth.role() = 'authenticated');

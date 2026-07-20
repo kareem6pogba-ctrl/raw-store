@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../lib/CartContext'
+import { supabase } from '../lib/supabase'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
@@ -9,16 +10,75 @@ const NAV_ITEMS = [
   { to: '/contact', label: 'Contact' },
 ]
 
+interface Suggestion {
+  id: string
+  name: string
+  price: number
+  image_main: string | null
+}
+
+const fmt = (n: number) => `EGP ${n.toLocaleString()}`
+
 export function Header() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [q, setQ] = useState('')
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+  const [activeIndex, setActiveIndex] = useState(-1)
   const { cartCount, setCartOpen } = useCart()
   const navigate = useNavigate()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    if (!q.trim()) {
+      setSuggestions([])
+      return
+    }
+    debounceRef.current = setTimeout(async () => {
+      const { data } = await supabase
+        .from('products')
+        .select('id, name, price, image_main')
+        .eq('is_published', true)
+        .ilike('name', `%${q.trim()}%`)
+        .limit(5)
+      setSuggestions((data ?? []) as Suggestion[])
+      setActiveIndex(-1)
+    }, 250)
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [q])
 
   const submitSearch = () => {
     navigate(`/shop?q=${encodeURIComponent(q)}`)
     setSearchOpen(false)
+    setSuggestions([])
+  }
+
+  const goToSuggestion = (s: Suggestion) => {
+    navigate(`/product/${s.id}`)
+    setSearchOpen(false)
+    setSuggestions([])
+    setQ('')
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActiveIndex((i) => Math.min(i + 1, suggestions.length - 1))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActiveIndex((i) => Math.max(i - 1, -1))
+    } else if (e.key === 'Enter') {
+      if (activeIndex >= 0 && suggestions[activeIndex]) {
+        goToSuggestion(suggestions[activeIndex])
+      } else {
+        submitSearch()
+      }
+    } else if (e.key === 'Escape') {
+      setSearchOpen(false)
+    }
   }
 
   return (
@@ -104,21 +164,51 @@ export function Header() {
         </div>
 
         {searchOpen && (
-          <div className="border-t border-espresso/10 px-8 py-4">
-            <div className="max-w-[1320px] mx-auto flex items-center gap-3">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5C5147" strokeWidth="1.6">
-                <circle cx="11" cy="11" r="7" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input
-                autoFocus
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && submitSearch()}
-                placeholder="Search for pieces, fabrics, colors…"
-                aria-label="Search products"
-                className="flex-1 bg-transparent outline-none font-body text-[15px] text-espresso"
-              />
+          <div className="border-t border-espresso/10 px-8 py-4" role="combobox" aria-expanded={suggestions.length > 0} aria-haspopup="listbox">
+            <div className="max-w-[1320px] mx-auto">
+              <div className="flex items-center gap-3">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5C5147" strokeWidth="1.6">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  autoFocus
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Search for pieces, fabrics, colors…"
+                  aria-label="Search products"
+                  aria-autocomplete="list"
+                  className="flex-1 bg-transparent outline-none font-body text-[15px] text-espresso"
+                />
+              </div>
+              {suggestions.length > 0 && (
+                <ul role="listbox" className="mt-3 border-t border-espresso/10 pt-3">
+                  {suggestions.map((s, i) => (
+                    <li key={s.id} role="option" aria-selected={i === activeIndex}>
+                      <button
+                        onClick={() => goToSuggestion(s)}
+                        onMouseEnter={() => setActiveIndex(i)}
+                        className={`w-full flex items-center gap-3 px-2 py-2.5 text-left ${
+                          i === activeIndex ? 'bg-beige/25' : ''
+                        }`}
+                      >
+                        <img src={s.image_main ?? ''} alt="" className="w-9 h-11 object-cover bg-beige shrink-0" />
+                        <span className="font-body text-sm text-espresso flex-1">{s.name}</span>
+                        <span className="font-body text-xs text-warmgray">{fmt(s.price)}</span>
+                      </button>
+                    </li>
+                  ))}
+                  <li>
+                    <button
+                      onClick={submitSearch}
+                      className="w-full text-left px-2 py-2.5 font-body text-xs text-sage underline"
+                    >
+                      See all results for "{q}"
+                    </button>
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         )}
