@@ -60,28 +60,27 @@ export function Checkout() {
     const orderNum = `RAW-${Math.floor(10000 + Math.random() * 89999)}`
 
     try {
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          order_number: orderNum,
-          customer_name: form.name,
-          email: form.email,
-          phone: form.phone,
-          address: form.address,
-          city: form.city,
-          subtotal,
-          shipping,
-          total,
-          payment_method: form.payment,
-          status: 'pending',
-        })
-        .select()
-        .single()
+      const orderId = crypto.randomUUID()
+
+      const { error: orderError } = await supabase.from('orders').insert({
+        id: orderId,
+        order_number: orderNum,
+        customer_name: form.name,
+        email: form.email,
+        phone: form.phone,
+        address: form.address,
+        city: form.city,
+        subtotal,
+        shipping,
+        total,
+        payment_method: form.payment,
+        status: 'pending',
+      })
 
       if (orderError) throw orderError
 
       const items = cart.map((item) => ({
-        order_id: order.id,
+        order_id: orderId,
         product_id: item.product.id,
         product_name: item.product.name,
         color: item.color.name,
