@@ -30,7 +30,6 @@ export function ProductDetail() {
       setQty(1)
       setImg(product.image_main ?? '')
       setAdded(false)
-      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
     }
   }, [product])
 

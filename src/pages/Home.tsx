@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Deckle } from '../components/Deckle'
 import { Button } from '../components/Button'
 import { ProductCard } from '../components/ProductCard'
+import { Reveal } from '../components/Reveal'
 import { useProducts } from '../lib/useProducts'
 
 function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
@@ -36,7 +37,7 @@ export function Home() {
   return (
     <div>
       <section className="max-w-[1320px] mx-auto px-8 pt-14 grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-14 items-center">
-        <div>
+        <Reveal>
           <Eyebrow>New Arrival — The First Chapter</Eyebrow>
           <h1 className="font-display font-normal text-[clamp(44px,5.2vw,74px)] leading-[1.02] text-espresso -tracking-[0.01em] mb-6">
             Cut from
@@ -57,10 +58,12 @@ export function Home() {
               <Button variant="ghost">View First Piece →</Button>
             </Link>
           </div>
-        </div>
-        <Deckle style={{ aspectRatio: '4/4.6' }} className="overflow-hidden bg-beige">
-          <img src={featured.image_main ?? ''} alt={featured.name} className="w-full h-full object-cover" />
-        </Deckle>
+        </Reveal>
+        <Reveal delay={150}>
+          <Deckle style={{ aspectRatio: '4/4.6' }} className="overflow-hidden bg-beige">
+            <img src={featured.image_main ?? ''} alt={featured.name} className="w-full h-full object-cover" />
+          </Deckle>
+        </Reveal>
       </section>
 
       <section className="max-w-[1320px] mx-auto mt-20 px-8 py-9 border-y border-espresso/10 grid grid-cols-2 md:grid-cols-4 gap-7">
@@ -69,23 +72,25 @@ export function Home() {
           { t: 'Made to Fade Well', d: 'Every wash, every wear adds character rather than wear-out.' },
           { t: 'Small Batches', d: 'Cut in limited runs so the details stay considered.' },
           { t: 'Cairo, Handled with Care', d: 'Designed and finished in Cairo, shipped nationwide.' },
-        ].map((v) => (
-          <div key={v.t}>
+        ].map((v, i) => (
+          <Reveal key={v.t} delay={i * 80}>
             <div className="font-display italic text-[17px] text-espresso mb-2">{v.t}</div>
             <div className="font-body text-[13px] leading-relaxed text-warmgray">{v.d}</div>
-          </div>
+          </Reveal>
         ))}
       </section>
 
       <section className="max-w-[1320px] mx-auto px-8 py-24 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <Deckle style={{ aspectRatio: '3/3.6' }} className="overflow-hidden bg-sage">
-          <img
-            src={products[4]?.image_main ?? featured.image_main ?? ''}
-            alt=""
-            className="w-full h-full object-cover"
-          />
-        </Deckle>
-        <div>
+        <Reveal>
+          <Deckle style={{ aspectRatio: '3/3.6' }} className="overflow-hidden bg-sage">
+            <img
+              src={products[4]?.image_main ?? featured.image_main ?? ''}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </Deckle>
+        </Reveal>
+        <Reveal delay={150}>
           <Eyebrow>The Studio Note</Eyebrow>
           <h2 className="font-display text-[clamp(30px,3.4vw,44px)] leading-[1.12] text-espresso mb-5 font-normal">
             We don't chase trend cycles.
@@ -100,23 +105,27 @@ export function Home() {
           <Link to="/about">
             <Button variant="outline">Our Story</Button>
           </Link>
-        </div>
+        </Reveal>
       </section>
 
       {trending.length > 0 && (
         <section className="max-w-[1320px] mx-auto px-8 pb-24">
-          <div className="flex justify-between items-end mb-10">
-            <div>
-              <Eyebrow>Currently Loved</Eyebrow>
-              <h2 className="font-display text-[34px] text-espresso font-normal">Trending This Week</h2>
+          <Reveal>
+            <div className="flex justify-between items-end mb-10">
+              <div>
+                <Eyebrow>Currently Loved</Eyebrow>
+                <h2 className="font-display text-[34px] text-espresso font-normal">Trending This Week</h2>
+              </div>
+              <Link to="/shop">
+                <Button variant="ghost">View All →</Button>
+              </Link>
             </div>
-            <Link to="/shop">
-              <Button variant="ghost">View All →</Button>
-            </Link>
-          </div>
+          </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-            {trending.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {trending.map((p, i) => (
+              <Reveal key={p.id} delay={i * 100}>
+                <ProductCard product={p} />
+              </Reveal>
             ))}
           </div>
         </section>
@@ -124,7 +133,9 @@ export function Home() {
 
       <section className="bg-beige py-20 px-8">
         <div className="max-w-[1320px] mx-auto">
-          <Eyebrow dark>What They're Saying</Eyebrow>
+          <Reveal>
+            <Eyebrow dark>What They're Saying</Eyebrow>
+          </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {[
               {
@@ -135,12 +146,12 @@ export function Home() {
                 q: 'My new everyday uniform. It goes with everything and somehow still feels considered.',
                 n: 'Jana M.',
               },
-            ].map((t) => (
-              <div key={t.n}>
+            ].map((t, i) => (
+              <Reveal key={t.n} delay={i * 120}>
                 <div className="text-espresso text-[15px] mb-3.5 tracking-widest">★★★★★</div>
                 <p className="font-display italic text-[22px] leading-snug text-espresso mb-3.5">"{t.q}"</p>
                 <div className="font-body text-[13px] tracking-wide text-espresso/70">— {t.n}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

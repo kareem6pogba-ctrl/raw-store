@@ -9,6 +9,7 @@ import { Home } from './pages/Home'
 import { Shop } from './pages/Shop'
 import { ProductDetail } from './pages/ProductDetail'
 import { NotFound } from './pages/NotFound'
+import { ScrollToTop } from './components/ScrollToTop'
 
 // Lower-traffic storefront pages: lazy-loaded so they don't bloat the initial bundle
 const Checkout = lazy(() => import('./pages/Checkout').then((m) => ({ default: m.Checkout })))
@@ -53,6 +54,7 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
+          <ScrollToTop />
           <Suspense fallback={<PageFallback />}>
             <Routes>
               <Route path="/" element={<StoreLayout><Home /></StoreLayout>} />

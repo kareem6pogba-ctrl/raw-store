@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
+import { Reveal } from '../components/Reveal'
 import { useProducts } from '../lib/useProducts'
 
 export function Shop() {
@@ -77,8 +78,10 @@ export function Shop() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-          {list.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {list.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 6) * 70}>
+              <ProductCard product={p} />
+            </Reveal>
           ))}
         </div>
       )}
