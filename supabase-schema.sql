@@ -166,3 +166,27 @@ on conflict (id) do nothing;
 insert into coupons (code, type, amount, min_order, usage_limit, active)
 values ('WELCOME10', 'percentage', 10, 500, 500, true)
 on conflict (code) do nothing;
+
+-- ============================================================
+-- ADMIN WRITE POLICIES — run this second block after creating
+-- your admin login user (Authentication -> Users -> Add user)
+-- Grants any authenticated user (i.e. your admin login) the
+-- ability to manage products and update orders.
+-- ============================================================
+create policy "admin manage products" on products
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+create policy "admin read all orders" on orders
+  for select using (auth.role() = 'authenticated');
+
+create policy "admin update orders" on orders
+  for update using (auth.role() = 'authenticated');
+
+create policy "admin read order_items" on order_items
+  for select using (auth.role() = 'authenticated');
+
+create policy "admin read customers" on customers
+  for select using (auth.role() = 'authenticated');
+
+create policy "admin manage coupons" on coupons
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
