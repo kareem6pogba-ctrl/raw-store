@@ -107,7 +107,7 @@ export function AdminProducts() {
           {products.map((p) => (
             <div key={p.id} className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/10 items-center">
               <div className="w-11 h-14 bg-beige overflow-hidden">
-                <img src={p.image_main ?? ''} alt="" className="w-full h-full object-cover" />
+                <img src={p.image_main ?? ''} alt={p.name} className="w-full h-full object-cover" />
               </div>
               <div className="font-body text-sm text-espresso">{p.name}</div>
               <div className="font-body text-sm text-warmgray">{p.category}</div>

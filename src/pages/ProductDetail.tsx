@@ -76,7 +76,7 @@ export function ProductDetail() {
             <img src={img} alt={product.name} className="w-full h-full object-cover" />
           </Deckle>
           <div className="flex gap-3">
-            {[product.image_main, product.image_alt].filter(Boolean).map((src) => (
+            {[product.image_main, product.image_alt].filter(Boolean).map((src, idx) => (
               <button
                 key={src}
                 onClick={() => setImg(src as string)}
@@ -84,7 +84,7 @@ export function ProductDetail() {
                   img === src ? 'border-espresso' : 'border-espresso/10'
                 }`}
               >
-                <img src={src as string} alt="" className="w-full h-full object-cover" />
+                <img src={src as string} alt={`${product.name} — view ${idx + 1}`} className="w-full h-full object-cover" />
               </button>
             ))}
           </div>

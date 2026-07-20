@@ -12,23 +12,30 @@ function Field({
   value,
   onChange,
   disabled,
+  error,
+  type = 'text',
 }: {
   label: string
   value: string
   onChange?: (v: string) => void
   disabled?: boolean
+  error?: string
+  type?: string
 }) {
   return (
     <label className="block">
       <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">{label}</div>
       <input
+        type={type}
         value={value}
         disabled={disabled}
         onChange={(e) => onChange && onChange(e.target.value)}
-        className={`w-full border-0 border-b border-espresso/10 bg-transparent py-2.5 font-body text-[14.5px] text-espresso outline-none ${
-          disabled ? 'opacity-60' : ''
-        }`}
+        aria-invalid={!!error}
+        className={`w-full border-0 border-b bg-transparent py-2.5 font-body text-[14.5px] text-espresso outline-none ${
+          error ? 'border-red-600' : 'border-espresso/10 focus:border-espresso'
+        } ${disabled ? 'opacity-60' : ''}`}
       />
+      {error && <div className="font-body text-xs text-red-600 mt-1.5">{error}</div>}
     </label>
   )
 }
@@ -48,11 +55,28 @@ export function Checkout() {
     city: '',
     payment: 'cod',
   })
+  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutForm, string>>>({})
 
   const shipping = subtotal >= 1500 || subtotal === 0 ? 0 : 90
   const total = subtotal + shipping
 
-  const update = (k: keyof CheckoutForm, v: string) => setForm((f) => ({ ...f, [k]: v }))
+  const update = (k: keyof CheckoutForm, v: string) => {
+    setForm((f) => ({ ...f, [k]: v }))
+    if (errors[k]) setErrors((e) => ({ ...e, [k]: undefined }))
+  }
+
+  const validateStep1 = () => {
+    const next: Partial<Record<keyof CheckoutForm, string>> = {}
+    if (!form.name.trim()) next.name = 'Required'
+    if (!form.phone.trim()) next.phone = 'Required'
+    else if (!/^[\d+\s()-]{7,}$/.test(form.phone.trim())) next.phone = 'Enter a valid phone number'
+    if (!form.email.trim()) next.email = 'Required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) next.email = 'Enter a valid email'
+    if (!form.address.trim()) next.address = 'Required'
+    if (!form.city.trim()) next.city = 'Required'
+    setErrors(next)
+    return Object.keys(next).length === 0
+  }
 
   const placeOrder = async () => {
     setSubmitting(true)
@@ -146,18 +170,18 @@ export function Checkout() {
           {step === 1 && (
             <div className="grid gap-4.5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
-                <Field label="Full Name" value={form.name} onChange={(v) => update('name', v)} />
-                <Field label="Phone" value={form.phone} onChange={(v) => update('phone', v)} />
+                <Field label="Full Name" value={form.name} onChange={(v) => update('name', v)} error={errors.name} />
+                <Field label="Phone" value={form.phone} onChange={(v) => update('phone', v)} error={errors.phone} type="tel" />
               </div>
-              <Field label="Email" value={form.email} onChange={(v) => update('email', v)} />
-              <Field label="Address" value={form.address} onChange={(v) => update('address', v)} />
+              <Field label="Email" value={form.email} onChange={(v) => update('email', v)} error={errors.email} type="email" />
+              <Field label="Address" value={form.address} onChange={(v) => update('address', v)} error={errors.address} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
-                <Field label="City" value={form.city} onChange={(v) => update('city', v)} />
+                <Field label="City" value={form.city} onChange={(v) => update('city', v)} error={errors.city} />
                 <Field label="Country" value="Egypt" disabled />
               </div>
               <Button
                 style={{ marginTop: 8, width: 'fit-content' }}
-                onClick={() => form.name && form.address && form.city && setStep(2)}
+                onClick={() => validateStep1() && setStep(2)}
               >
                 Continue to Payment
               </Button>

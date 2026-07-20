@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${product.id}`} className="focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-4 block">
         <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4">
           <img
             src={hover && product.image_alt ? product.image_alt : product.image_main ?? ''}
@@ -26,7 +26,7 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           )}
           <div
-            className={`absolute left-0 right-0 bottom-0 p-3 transition-transform duration-300 ease-out ${
+            className={`absolute left-0 right-0 bottom-0 p-3 transition-transform duration-300 ease-out max-md:translate-y-0 focus-within:translate-y-0 ${
               hover ? 'translate-y-0' : 'translate-y-[110%]'
             }`}
           >
@@ -39,7 +39,7 @@ export function ProductCard({ product }: { product: Product }) {
                   product.sizes[Math.floor(product.sizes.length / 2)]
                 )
               }}
-              className="w-full bg-espresso text-linen py-3 text-[11.5px] tracking-widest uppercase"
+              className="w-full bg-espresso text-linen py-3 text-[11.5px] tracking-widest uppercase focus-visible:outline-2 focus-visible:outline-beige focus-visible:outline-offset-2"
             >
               Quick Add
             </button>

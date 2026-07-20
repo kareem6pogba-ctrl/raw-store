@@ -20,7 +20,7 @@ export function Button({
   disabled,
 }: ButtonProps) {
   const base =
-    'font-body uppercase tracking-widest transition-all duration-300 border border-espresso cursor-pointer whitespace-nowrap'
+    'font-body uppercase tracking-widest transition-all duration-300 border border-espresso cursor-pointer whitespace-nowrap focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-2'
   const size = small ? 'text-xs px-5 py-3' : 'text-[13px] px-9 py-4'
   const variants: Record<string, string> = {
     solid: 'bg-espresso text-linen hover:bg-transparent hover:text-espresso',
