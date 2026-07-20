@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-espresso: #3A2418;
+  --color-linen: #F4EDE2;
+  --color-beige: #C9A876;
+  --color-sage: #7A8471;
+  --color-warmgray: #5C5147;
+  --font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+  background: var(--color-linen);
+  font-family: var(--font-body);
+  color: var(--color-espresso);
+}
+
+.deckle {
+  clip-path: polygon(
+    2% 5%, 10% 2%, 22% 4%, 33% 1%, 45% 3%, 58% 1%, 70% 3%, 83% 1%, 94% 3%, 98% 8%,
+    99% 20%, 97% 33%, 99% 46%, 97% 58%, 99% 70%, 97% 83%, 99% 93%, 94% 98%,
+    83% 96%, 70% 99%, 58% 96%, 45% 99%, 33% 96%, 22% 99%, 10% 96%, 3% 92%,
+    1% 80%, 3% 68%, 1% 55%, 3% 42%, 1% 30%, 3% 18%
+  );
+}
