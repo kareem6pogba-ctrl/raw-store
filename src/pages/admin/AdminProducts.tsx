@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { Button } from '../../components/Button'
+import { ConfirmModal } from '../../components/ConfirmModal'
 import type { Product } from '../../types'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
@@ -24,6 +25,7 @@ export function AdminProducts() {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState<Product | null>(null)
   const [showForm, setShowForm] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Product | null>(null)
 
   const load = async () => {
     setLoading(true)
@@ -51,9 +53,10 @@ export function AdminProducts() {
     load()
   }
 
-  const remove = async (p: Product) => {
-    if (!confirm(`Delete "${p.name}"? This cannot be undone.`)) return
-    await supabase.from('products').delete().eq('id', p.id)
+  const confirmRemove = async () => {
+    if (!pendingDelete) return
+    await supabase.from('products').delete().eq('id', pendingDelete.id)
+    setPendingDelete(null)
     load()
   }
 
@@ -124,7 +127,7 @@ export function AdminProducts() {
                 <button onClick={() => openEdit(p)} className="font-body text-xs text-espresso underline">
                   Edit
                 </button>
-                <button onClick={() => remove(p)} className="font-body text-xs text-red-700 underline">
+                <button onClick={() => setPendingDelete(p)} className="font-body text-xs text-red-700 underline">
                   Delete
                 </button>
               </div>
@@ -145,6 +148,16 @@ export function AdminProducts() {
           onSave={save}
         />
       )}
+
+      <ConfirmModal
+        open={!!pendingDelete}
+        title="Delete Product"
+        message={`Delete "${pendingDelete?.name}"? This cannot be undone and will remove it from the live storefront immediately.`}
+        confirmLabel="Delete"
+        danger
+        onConfirm={confirmRemove}
+        onCancel={() => setPendingDelete(null)}
+      />
     </div>
   )
 }
