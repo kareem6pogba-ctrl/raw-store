@@ -46,7 +46,7 @@ export function Home() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
           <div className="md:col-span-7 md:row-start-1 relative z-10">
             <Reveal>
-              <div className="inline-block glass-badge rounded-full px-4 py-1.5 mb-6">
+              <div className="inline-block soft-pill px-4 py-1.5 mb-6">
                 <span className="font-body text-[11px] tracking-[0.18em] uppercase text-espresso font-medium">
                   New Arrival — The First Chapter
                 </span>
@@ -71,7 +71,7 @@ export function Home() {
                     className="hero-zoom w-full h-full object-cover"
                   />
                 </Deckle>
-                <div className="absolute -bottom-6 -left-6 glass-card rounded-2xl px-5 py-4 max-w-[210px] hidden sm:block">
+                <div className="absolute -bottom-6 -left-6 soft-panel px-5 py-4 max-w-[210px] hidden sm:block">
                   <div className="font-display italic text-lg text-espresso mb-1">{featured.name}</div>
                   <div className="font-body text-sm text-warmgray">EGP {featured.price.toLocaleString()}</div>
                 </div>
@@ -106,7 +106,7 @@ export function Home() {
           { t: 'Cairo, Handled with Care', d: 'Designed and finished in Cairo, shipped nationwide.' },
         ].map((v, i) => (
           <Reveal key={v.t} delay={i * 80}>
-            <div className="glass-card rounded-2xl p-5 h-full">
+            <div className="soft-panel p-5 h-full">
               <div className="font-display italic text-[17px] text-espresso mb-2">{v.t}</div>
               <div className="font-body text-[13px] leading-relaxed text-warmgray">{v.d}</div>
             </div>
@@ -184,7 +184,7 @@ export function Home() {
               },
             ].map((t, i) => (
               <Reveal key={t.n} delay={i * 120}>
-                <div className="glass-dark rounded-2xl p-8 h-full">
+                <div className="soft-panel-dark p-8 h-full">
                   <div className="text-beige text-[15px] mb-3.5 tracking-widest">★★★★★</div>
                   <p className="font-display italic text-[24px] leading-snug text-linen mb-4">"{t.q}"</p>
                   <div className="font-body text-[13px] tracking-wide text-linen/70">— {t.n}</div>

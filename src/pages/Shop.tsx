@@ -47,7 +47,7 @@ export function Shop() {
       </div>
 
       <div className="flex justify-between items-center mb-10 flex-wrap gap-4">
-        <div className="glass rounded-full p-1.5 flex gap-1 flex-wrap">
+        <div className="soft-pill p-1.5 flex gap-1 flex-wrap">
           {cats.map((c) => (
             <button
               key={c}
@@ -63,7 +63,7 @@ export function Shop() {
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
-          className="font-body text-[12.5px] tracking-wide uppercase text-espresso glass rounded-full px-4 py-3"
+          className="font-body text-[12.5px] tracking-wide uppercase text-espresso soft-pill px-4 py-3"
         >
           <option value="newest">Newest</option>
           <option value="price-asc">Price: Low to High</option>

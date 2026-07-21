@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -7,12 +7,13 @@
   --color-beige: #C9A876;
   --color-sage: #7A8471;
   --color-warmgray: #5C5147;
-  --font-display: 'Fraunces', 'Iowan Old Style', serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Poppins', -apple-system, sans-serif;
+  --font-body: 'Poppins', 'Inter', -apple-system, sans-serif;
 }
 
 body {
-  background: var(--color-linen);
+  background: linear-gradient(180deg, #FAF6EF 0%, #EFE7D8 100%);
+  background-attachment: fixed;
   font-family: var(--font-body);
   color: var(--color-espresso);
 }
@@ -148,4 +149,34 @@ body {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================================
+   SOFT PANEL SYSTEM — solid rounded cards with ambient shadow,
+   matching the jurx.store reference: large radius, soft depth,
+   monochrome-adjacent surfaces rather than heavy blur.
+   ============================================================ */
+.soft-panel {
+  background: #FCFAF5;
+  border-radius: 32px;
+  box-shadow: 0 30px 60px -30px rgba(58, 36, 24, 0.16), 0 6px 18px -8px rgba(58, 36, 24, 0.08);
+}
+.soft-panel-dark {
+  background: var(--color-espresso);
+  border-radius: 32px;
+  box-shadow: 0 30px 60px -30px rgba(58, 36, 24, 0.35);
+}
+.soft-pill {
+  background: #FCFAF5;
+  border-radius: 999px;
+  box-shadow: 0 20px 40px -22px rgba(58, 36, 24, 0.2), 0 4px 12px -6px rgba(58, 36, 24, 0.08);
+}
+.icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }

@@ -10,7 +10,7 @@ export function Deckle({
   style?: CSSProperties
 }) {
   return (
-    <div className={`deckle ${className}`} style={style}>
+    <div className={`rounded-[32px] ${className}`} style={style}>
       {children}
     </div>
   )

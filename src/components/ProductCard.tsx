@@ -13,10 +13,10 @@ export function ProductCard({ product }: { product: Product }) {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="product-card-lift"
+      className="soft-panel product-card-lift p-3"
     >
       <Link to={`/product/${product.id}`} className="focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-4 block">
-        <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4 rounded-2xl">
+        <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4 rounded-[22px]">
           <img
             src={product.image_main ?? ''}
             alt={product.name}
@@ -35,45 +35,50 @@ export function ProductCard({ product }: { product: Product }) {
             />
           )}
           {product.tag && (
-            <div className="absolute top-3.5 left-3.5 glass-badge rounded-full text-espresso text-[10.5px] tracking-wider uppercase px-3.5 py-1.5">
+            <div className="absolute top-3 right-3 bg-espresso text-linen text-[10.5px] tracking-wider uppercase font-bold px-3 py-1.5 rounded-full">
               {product.tag}
             </div>
           )}
-          <div
-            className={`absolute left-2.5 right-2.5 bottom-2.5 transition-transform duration-300 ease-out max-md:translate-y-0 focus-within:translate-y-0 ${
-              hover ? 'translate-y-0' : 'translate-y-[130%]'
-            }`}
-          >
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                addToCart(
-                  product,
-                  product.colors[0],
-                  product.sizes[Math.floor(product.sizes.length / 2)]
-                )
-              }}
-              className="w-full glass-dark rounded-full text-linen py-3 text-[11.5px] tracking-widest uppercase focus-visible:outline-2 focus-visible:outline-beige focus-visible:outline-offset-2"
-            >
-              Quick Add
-            </button>
-          </div>
-        </div>
-        <div className="text-[14.5px] text-espresso mb-1 font-medium">{product.name}</div>
-        <div className="flex justify-between text-[13.5px] text-warmgray">
-          <span>{fmt(product.price)}</span>
-          <span className="flex gap-1.5">
-            {product.colors.slice(0, 4).map((c) => (
-              <span
-                key={c.name}
-                title={c.name}
-                className="w-2.5 h-2.5 rounded-full inline-block border border-espresso/10"
-                style={{ background: c.hex }}
-              />
-            ))}
-          </span>
         </div>
       </Link>
+
+      <div className="px-1.5 pb-1">
+        <div className="font-body text-[10.5px] tracking-[0.14em] uppercase text-sage font-semibold mb-1.5">
+          {product.category}
+        </div>
+        <Link to={`/product/${product.id}`}>
+          <div className="font-display text-[16px] text-espresso mb-2.5 font-bold leading-snug">{product.name}</div>
+        </Link>
+
+        <div className="flex items-center gap-2 mb-3">
+          {product.colors.slice(0, 4).map((c) => (
+            <span
+              key={c.name}
+              title={c.name}
+              className="w-4 h-4 rounded-full inline-block border-2 border-white shadow-[0_0_0_1px_rgba(58,36,24,0.15)]"
+              style={{ background: c.hex }}
+            />
+          ))}
+        </div>
+
+        <div className="flex items-end justify-between gap-2">
+          <div className="font-display text-[17px] text-espresso font-extrabold">{fmt(product.price)}</div>
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              addToCart(
+                product,
+                product.colors[0],
+                product.sizes[Math.floor(product.sizes.length / 2)]
+              )
+            }}
+            className="soft-pill flex items-center gap-1.5 px-4 py-2.5 text-espresso text-[11.5px] font-bold tracking-wide uppercase focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-2 active:scale-95 transition-transform"
+          >
+            Add
+            <span className="text-base leading-none">+</span>
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
