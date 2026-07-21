@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
 import { Reveal } from '../components/Reveal'
+import { SkeletonGrid } from '../components/Skeleton'
 import { useProducts } from '../lib/useProducts'
 
 export function Shop() {
@@ -71,7 +72,7 @@ export function Shop() {
       </div>
 
       {loading ? (
-        <div className="text-center py-20 font-body text-warmgray">Loading…</div>
+        <SkeletonGrid count={6} />
       ) : list.length === 0 ? (
         <div className="text-center py-20 font-body text-warmgray">
           Nothing matches yet — try another search or browse the full collection.

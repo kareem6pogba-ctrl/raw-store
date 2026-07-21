@@ -48,3 +48,65 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hero image: subtle cinematic zoom-in on load */
+@keyframes cinematic-zoom {
+  from { transform: scale(1.09); }
+  to { transform: scale(1); }
+}
+.hero-zoom {
+  animation: cinematic-zoom 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Hero headline: line-by-line reveal */
+@keyframes line-reveal {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.line-reveal-mask {
+  overflow: hidden;
+  display: block;
+}
+.line-reveal-inner {
+  display: block;
+  animation: line-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Page transition fade */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.page-transition {
+  animation: page-fade-in 0.45s ease-out both;
+}
+
+/* Product card lift on hover */
+.product-card-lift {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.product-card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px -14px rgba(58, 36, 24, 0.28);
+}
+
+/* Skeleton loading shimmer */
+@keyframes skeleton-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #E8DCC8 0%, #F4EDE2 50%, #E8DCC8 100%);
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom, .line-reveal-inner, .page-transition {
+    animation: none !important;
+  }
+  .skeleton {
+    animation: none !important;
+    background: #EFE6D8;
+  }
+}

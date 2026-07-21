@@ -10,16 +10,30 @@ export function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart()
 
   return (
-    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      className="product-card-lift"
+    >
       <Link to={`/product/${product.id}`} className="focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-4 block">
         <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4">
           <img
-            src={hover && product.image_alt ? product.image_alt : product.image_main ?? ''}
+            src={product.image_main ?? ''}
             alt={product.name}
-            className={`w-full h-full object-cover transition-transform duration-700 ease-out ${
-              hover ? 'scale-[1.045]' : 'scale-100'
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-out ${
+              hover && product.image_alt ? 'opacity-0' : 'opacity-100'
             }`}
           />
+          {product.image_alt && (
+            <img
+              src={product.image_alt}
+              alt=""
+              aria-hidden="true"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-out ${
+                hover ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          )}
           {product.tag && (
             <div className="absolute top-3.5 left-3.5 bg-linen text-espresso text-[10.5px] tracking-wider uppercase px-3 py-1.5">
               {product.tag}

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { CartProvider } from './lib/CartContext'
 import { AuthProvider } from './lib/AuthContext'
 import { Header } from './components/Header'
@@ -31,10 +31,13 @@ const AdminCustomers = lazy(() => import('./pages/admin/AdminCustomers').then((m
 const AdminCoupons = lazy(() => import('./pages/admin/AdminCoupons').then((m) => ({ default: m.AdminCoupons })))
 
 function StoreLayout({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation()
   return (
     <div className="bg-linen min-h-screen font-body">
       <Header />
-      {children}
+      <div key={pathname} className="page-transition">
+        {children}
+      </div>
       <Footer />
       <CartDrawer />
     </div>

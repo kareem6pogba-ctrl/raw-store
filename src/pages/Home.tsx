@@ -3,6 +3,8 @@ import { Deckle } from '../components/Deckle'
 import { Button } from '../components/Button'
 import { ProductCard } from '../components/ProductCard'
 import { Reveal } from '../components/Reveal'
+import { LineReveal } from '../components/LineReveal'
+import { SkeletonGrid } from '../components/Skeleton'
 import { useProducts } from '../lib/useProducts'
 
 function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
@@ -23,7 +25,11 @@ export function Home() {
   const trending = products.slice(1, 4)
 
   if (loading) {
-    return <div className="max-w-[1320px] mx-auto px-8 py-40 text-center font-body text-warmgray">Loading…</div>
+    return (
+      <div className="max-w-[1320px] mx-auto px-8 py-20">
+        <SkeletonGrid count={3} />
+      </div>
+    )
   }
 
   if (!featured) {
@@ -40,11 +46,11 @@ export function Home() {
         <Reveal>
           <Eyebrow>New Arrival — The First Chapter</Eyebrow>
           <h1 className="font-display font-normal text-[clamp(44px,5.2vw,74px)] leading-[1.02] text-espresso -tracking-[0.01em] mb-6">
-            Cut from
-            <br />
-            <em className="italic font-medium">unhurried</em>
-            <br />
-            cloth.
+            <LineReveal delay={100}>Cut from</LineReveal>
+            <LineReveal delay={220}>
+              <em className="italic font-medium">unhurried</em>
+            </LineReveal>
+            <LineReveal delay={340}>cloth.</LineReveal>
           </h1>
           <p className="font-body text-[16.5px] leading-relaxed text-warmgray max-w-[400px] mb-8">
             RAW works in natural fibers and quiet silhouettes — pieces designed to fade,
@@ -61,7 +67,11 @@ export function Home() {
         </Reveal>
         <Reveal delay={150}>
           <Deckle style={{ aspectRatio: '4/4.6' }} className="overflow-hidden bg-beige">
-            <img src={featured.image_main ?? ''} alt={featured.name} className="w-full h-full object-cover" />
+            <img
+              src={featured.image_main ?? ''}
+              alt={featured.name}
+              className="hero-zoom w-full h-full object-cover"
+            />
           </Deckle>
         </Reveal>
       </section>

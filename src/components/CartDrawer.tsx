@@ -17,8 +17,8 @@ export function CartDrawer() {
         }`}
       />
       <div
-        className={`fixed top-0 right-0 h-full w-[min(440px,92vw)] bg-linen z-[61] flex flex-col shadow-2xl transition-transform duration-500 ease-out ${
-          cartOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 h-full w-[min(440px,92vw)] bg-linen z-[61] flex flex-col shadow-2xl transition-transform duration-500 ${
+          cartOpen ? 'translate-x-0 ease-[cubic-bezier(0.34,1.56,0.64,1)]' : 'translate-x-full ease-in'
         }`}
       >
         <div className="px-7 py-6 border-b border-espresso/10 flex justify-between items-center">

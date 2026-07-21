@@ -5,6 +5,7 @@ import { Button } from '../components/Button'
 import { ProductCard } from '../components/ProductCard'
 import { useProducts } from '../lib/useProducts'
 import { useCart } from '../lib/CartContext'
+import { SkeletonProductDetail } from '../components/Skeleton'
 import type { ColorOption } from '../types'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
@@ -34,7 +35,7 @@ export function ProductDetail() {
   }, [product])
 
   if (loading) {
-    return <div className="max-w-[1320px] mx-auto px-8 py-40 text-center font-body text-warmgray">Loading…</div>
+    return <SkeletonProductDetail />
   }
 
   if (!product) {
