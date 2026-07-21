@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
       className="product-card-lift"
     >
       <Link to={`/product/${product.id}`} className="focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-4 block">
-        <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4">
+        <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4 rounded-2xl">
           <img
             src={product.image_main ?? ''}
             alt={product.name}
@@ -35,13 +35,13 @@ export function ProductCard({ product }: { product: Product }) {
             />
           )}
           {product.tag && (
-            <div className="absolute top-3.5 left-3.5 bg-linen text-espresso text-[10.5px] tracking-wider uppercase px-3 py-1.5">
+            <div className="absolute top-3.5 left-3.5 glass-badge rounded-full text-espresso text-[10.5px] tracking-wider uppercase px-3.5 py-1.5">
               {product.tag}
             </div>
           )}
           <div
-            className={`absolute left-0 right-0 bottom-0 p-3 transition-transform duration-300 ease-out max-md:translate-y-0 focus-within:translate-y-0 ${
-              hover ? 'translate-y-0' : 'translate-y-[110%]'
+            className={`absolute left-2.5 right-2.5 bottom-2.5 transition-transform duration-300 ease-out max-md:translate-y-0 focus-within:translate-y-0 ${
+              hover ? 'translate-y-0' : 'translate-y-[130%]'
             }`}
           >
             <button
@@ -53,7 +53,7 @@ export function ProductCard({ product }: { product: Product }) {
                   product.sizes[Math.floor(product.sizes.length / 2)]
                 )
               }}
-              className="w-full bg-espresso text-linen py-3 text-[11.5px] tracking-widest uppercase focus-visible:outline-2 focus-visible:outline-beige focus-visible:outline-offset-2"
+              className="w-full glass-dark rounded-full text-linen py-3 text-[11.5px] tracking-widest uppercase focus-visible:outline-2 focus-visible:outline-beige focus-visible:outline-offset-2"
             >
               Quick Add
             </button>

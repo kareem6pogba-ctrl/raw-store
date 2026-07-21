@@ -110,3 +110,42 @@ body {
     background: #EFE6D8;
   }
 }
+
+/* ============================================================
+   GLASS / DEPTH SYSTEM
+   ============================================================ */
+.glass {
+  background: rgba(247, 242, 234, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.glass-dark {
+  background: rgba(58, 36, 24, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 32px -12px rgba(58, 36, 24, 0.25);
+}
+
+/* Oversized editorial type utility */
+.text-mega {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+}
+
+/* Floating glass badge */
+.glass-badge {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}

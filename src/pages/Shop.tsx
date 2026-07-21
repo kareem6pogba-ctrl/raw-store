@@ -38,22 +38,22 @@ export function Shop() {
   }, [products, category, sort, query])
 
   return (
-    <div className="max-w-[1320px] mx-auto px-8 pt-14 pb-24">
-      <div className="mb-11">
+    <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-10 pb-24">
+      <div className="mb-10">
         <div className="font-body text-xs tracking-[0.22em] uppercase text-sage mb-3.5">
           {query ? `Results for "${query}"` : 'The Full Collection'}
         </div>
-        <h1 className="font-display text-[clamp(36px,4vw,54px)] text-espresso font-normal">Shop RAW</h1>
+        <h1 className="text-mega text-espresso text-[clamp(40px,6vw,80px)]">Shop RAW</h1>
       </div>
 
-      <div className="flex justify-between items-center border-y border-espresso/10 py-4.5 mb-11 flex-wrap gap-4">
-        <div className="flex gap-2.5 flex-wrap">
+      <div className="flex justify-between items-center mb-10 flex-wrap gap-4">
+        <div className="glass rounded-full p-1.5 flex gap-1 flex-wrap">
           {cats.map((c) => (
             <button
               key={c}
               onClick={() => setCategory(c)}
-              className={`font-body text-[12.5px] tracking-wide uppercase px-4.5 py-2.5 border transition-colors ${
-                category === c ? 'bg-espresso text-linen border-espresso' : 'border-espresso/10 text-espresso'
+              className={`font-body text-[12.5px] tracking-wide uppercase px-4.5 py-2.5 rounded-full transition-colors ${
+                category === c ? 'bg-espresso text-linen' : 'text-espresso hover:bg-espresso/8'
               }`}
             >
               {c}
@@ -63,7 +63,7 @@ export function Shop() {
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
-          className="font-body text-[12.5px] tracking-wide uppercase text-espresso bg-transparent border border-espresso/10 px-3.5 py-2.5"
+          className="font-body text-[12.5px] tracking-wide uppercase text-espresso glass rounded-full px-4 py-3"
         >
           <option value="newest">Newest</option>
           <option value="price-asc">Price: Low to High</option>

@@ -42,41 +42,63 @@ export function Home() {
 
   return (
     <div>
-      <section className="max-w-[1320px] mx-auto px-8 pt-14 grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-14 items-center">
-        <Reveal>
-          <Eyebrow>New Arrival — The First Chapter</Eyebrow>
-          <h1 className="font-display font-normal text-[clamp(44px,5.2vw,74px)] leading-[1.02] text-espresso -tracking-[0.01em] mb-6">
-            <LineReveal delay={100}>Cut from</LineReveal>
-            <LineReveal delay={220}>
-              <em className="italic font-medium">unhurried</em>
-            </LineReveal>
-            <LineReveal delay={340}>cloth.</LineReveal>
-          </h1>
-          <p className="font-body text-[16.5px] leading-relaxed text-warmgray max-w-[400px] mb-8">
-            RAW works in natural fibers and quiet silhouettes — pieces designed to fade,
-            soften, and belong to you a little more with every season.
-          </p>
-          <div className="flex gap-4 items-center">
-            <Link to="/shop">
-              <Button>Shop the Edit</Button>
-            </Link>
-            <Link to={`/product/${featured.id}`}>
-              <Button variant="ghost">View First Piece →</Button>
-            </Link>
+      <section className="relative max-w-[1400px] mx-auto px-4 md:px-8 pt-8 md:pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
+          <div className="md:col-span-7 md:row-start-1 relative z-10">
+            <Reveal>
+              <div className="inline-block glass-badge rounded-full px-4 py-1.5 mb-6">
+                <span className="font-body text-[11px] tracking-[0.18em] uppercase text-espresso font-medium">
+                  New Arrival — The First Chapter
+                </span>
+              </div>
+              <h1 className="text-mega text-espresso text-[clamp(56px,9vw,148px)]">
+                <LineReveal delay={100}>Cut from</LineReveal>
+                <LineReveal delay={220}>
+                  <em className="italic font-medium">unhurried</em>
+                </LineReveal>
+                <LineReveal delay={340}>cloth.</LineReveal>
+              </h1>
+            </Reveal>
           </div>
-        </Reveal>
-        <Reveal delay={150}>
-          <Deckle style={{ aspectRatio: '4/4.6' }} className="overflow-hidden bg-beige">
-            <img
-              src={featured.image_main ?? ''}
-              alt={featured.name}
-              className="hero-zoom w-full h-full object-cover"
-            />
-          </Deckle>
+
+          <div className="md:col-span-5 md:row-start-1 relative z-0">
+            <Reveal delay={150}>
+              <div className="relative">
+                <Deckle style={{ aspectRatio: '4/5' }} className="overflow-hidden bg-beige">
+                  <img
+                    src={featured.image_main ?? ''}
+                    alt={featured.name}
+                    className="hero-zoom w-full h-full object-cover"
+                  />
+                </Deckle>
+                <div className="absolute -bottom-6 -left-6 glass-card rounded-2xl px-5 py-4 max-w-[210px] hidden sm:block">
+                  <div className="font-display italic text-lg text-espresso mb-1">{featured.name}</div>
+                  <div className="font-body text-sm text-warmgray">EGP {featured.price.toLocaleString()}</div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+
+        <Reveal delay={400}>
+          <div className="md:col-span-7 mt-8 md:mt-10 md:max-w-[420px]">
+            <p className="font-body text-[16.5px] leading-relaxed text-warmgray mb-8">
+              RAW works in natural fibers and quiet silhouettes — pieces designed to fade,
+              soften, and belong to you a little more with every season.
+            </p>
+            <div className="flex gap-4 items-center">
+              <Link to="/shop">
+                <Button>Shop the Edit</Button>
+              </Link>
+              <Link to={`/product/${featured.id}`}>
+                <Button variant="ghost">View First Piece →</Button>
+              </Link>
+            </div>
+          </div>
         </Reveal>
       </section>
 
-      <section className="max-w-[1320px] mx-auto mt-20 px-8 py-9 border-y border-espresso/10 grid grid-cols-2 md:grid-cols-4 gap-7">
+      <section className="max-w-[1400px] mx-auto mt-24 px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { t: 'Natural Fibers', d: 'Cotton, linen, and undyed cloth chosen for how it feels, not just how it looks.' },
           { t: 'Made to Fade Well', d: 'Every wash, every wear adds character rather than wear-out.' },
@@ -84,13 +106,15 @@ export function Home() {
           { t: 'Cairo, Handled with Care', d: 'Designed and finished in Cairo, shipped nationwide.' },
         ].map((v, i) => (
           <Reveal key={v.t} delay={i * 80}>
-            <div className="font-display italic text-[17px] text-espresso mb-2">{v.t}</div>
-            <div className="font-body text-[13px] leading-relaxed text-warmgray">{v.d}</div>
+            <div className="glass-card rounded-2xl p-5 h-full">
+              <div className="font-display italic text-[17px] text-espresso mb-2">{v.t}</div>
+              <div className="font-body text-[13px] leading-relaxed text-warmgray">{v.d}</div>
+            </div>
           </Reveal>
         ))}
       </section>
 
-      <section className="max-w-[1320px] mx-auto px-8 py-24 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <section className="max-w-[1400px] mx-auto px-4 md:px-8 py-28 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <Reveal>
           <Deckle style={{ aspectRatio: '3/3.6' }} className="overflow-hidden bg-sage">
             <img
@@ -102,10 +126,12 @@ export function Home() {
         </Reveal>
         <Reveal delay={150}>
           <Eyebrow>The Studio Note</Eyebrow>
-          <h2 className="font-display text-[clamp(30px,3.4vw,44px)] leading-[1.12] text-espresso mb-5 font-normal">
-            We don't chase trend cycles.
+          <h2 className="text-mega text-espresso text-[clamp(38px,5vw,64px)] mb-6">
+            We don't chase
             <br />
-            We chase <em className="italic">good cloth</em>.
+            trend cycles. We chase
+            <br />
+            <em className="italic font-medium">good cloth</em>.
           </h2>
           <p className="font-body text-[15.5px] leading-loose text-warmgray mb-7 max-w-[440px]">
             Every RAW piece begins with a fabric, not a sketch. We source linen and cotton
@@ -119,12 +145,12 @@ export function Home() {
       </section>
 
       {trending.length > 0 && (
-        <section className="max-w-[1320px] mx-auto px-8 pb-24">
+        <section className="max-w-[1400px] mx-auto px-4 md:px-8 pb-28">
           <Reveal>
             <div className="flex justify-between items-end mb-10">
               <div>
                 <Eyebrow>Currently Loved</Eyebrow>
-                <h2 className="font-display text-[34px] text-espresso font-normal">Trending This Week</h2>
+                <h2 className="text-mega text-espresso text-[clamp(32px,4.5vw,56px)]">Trending This Week</h2>
               </div>
               <Link to="/shop">
                 <Button variant="ghost">View All →</Button>
@@ -141,12 +167,12 @@ export function Home() {
         </section>
       )}
 
-      <section className="bg-beige py-20 px-8">
-        <div className="max-w-[1320px] mx-auto">
+      <section className="bg-espresso py-24 px-4 md:px-8">
+        <div className="max-w-[1400px] mx-auto">
           <Reveal>
             <Eyebrow dark>What They're Saying</Eyebrow>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 q: "The fabric is unlike anything else I own — it just gets better with wear. Minimal, elegant, exactly what I wanted.",
@@ -158,9 +184,11 @@ export function Home() {
               },
             ].map((t, i) => (
               <Reveal key={t.n} delay={i * 120}>
-                <div className="text-espresso text-[15px] mb-3.5 tracking-widest">★★★★★</div>
-                <p className="font-display italic text-[22px] leading-snug text-espresso mb-3.5">"{t.q}"</p>
-                <div className="font-body text-[13px] tracking-wide text-espresso/70">— {t.n}</div>
+                <div className="glass-dark rounded-2xl p-8 h-full">
+                  <div className="text-beige text-[15px] mb-3.5 tracking-widest">★★★★★</div>
+                  <p className="font-display italic text-[24px] leading-snug text-linen mb-4">"{t.q}"</p>
+                  <div className="font-body text-[13px] tracking-wide text-linen/70">— {t.n}</div>
+                </div>
               </Reveal>
             ))}
           </div>
