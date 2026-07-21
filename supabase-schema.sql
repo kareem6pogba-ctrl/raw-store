@@ -208,3 +208,51 @@ create policy "admin upload product images" on storage.objects
 
 create policy "admin delete product images" on storage.objects
   for delete using (bucket_id = 'products' and auth.role() = 'authenticated');
+
+-- ============================================================
+-- STORE SETTINGS — single-row table for admin-configurable
+-- values like the free shipping threshold. Run this fourth block.
+-- ============================================================
+create table if not exists store_settings (
+  id int primary key default 1,
+  free_shipping_threshold numeric not null default 1500,
+  updated_at timestamptz default now(),
+  constraint single_row check (id = 1)
+);
+
+insert into store_settings (id, free_shipping_threshold)
+values (1, 1500)
+on conflict (id) do nothing;
+
+alter table store_settings enable row level security;
+
+create policy "public read settings" on store_settings
+  for select using (true);
+
+create policy "admin update settings" on store_settings
+  for update using (auth.role() = 'authenticated');
+
+-- ============================================================
+-- COUPON USAGE COUNTER — securely increments times_used when
+-- an order references a coupon, without granting the public
+-- anon role any direct write access to the coupons table.
+-- ============================================================
+create or replace function increment_coupon_usage()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if new.coupon_code is not null then
+    update coupons set times_used = times_used + 1 where code = new.coupon_code;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_increment_coupon_usage on orders;
+create trigger trg_increment_coupon_usage
+  after insert on orders
+  for each row
+  execute function increment_coupon_usage();

@@ -167,9 +167,6 @@ export function ProductDetail() {
                 {added ? 'Added ✓' : 'Add to Cart'}
               </Button>
             </div>
-            <Button variant="ghost" small>
-              ♡ Add to Wishlist
-            </Button>
 
             <div className="mt-8 pt-6 border-t border-espresso/8">
               {[

@@ -5,7 +5,7 @@ import { Button } from './Button'
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
 
 export function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, updateQty, removeItem, subtotal } = useCart()
+  const { cart, cartOpen, setCartOpen, updateQty, removeItem, subtotal, freeShippingThreshold } = useCart()
   const navigate = useNavigate()
 
   return (
@@ -76,9 +76,9 @@ export function CartDrawer() {
               <span>{fmt(subtotal)}</span>
             </div>
             <div className="font-body text-xs text-sage mb-4">
-              {subtotal >= 1500
+              {subtotal >= freeShippingThreshold
                 ? "You've unlocked free shipping."
-                : `Add ${fmt(1500 - subtotal)} more for free shipping.`}
+                : `Add ${fmt(freeShippingThreshold - subtotal)} more for free shipping.`}
             </div>
             <Button
               fullWidth

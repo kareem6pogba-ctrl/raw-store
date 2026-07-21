@@ -41,7 +41,7 @@ function Field({
 }
 
 export function Checkout() {
-  const { cart, subtotal, clearCart } = useCart()
+  const { cart, subtotal, clearCart, freeShippingThreshold } = useCart()
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
@@ -57,8 +57,56 @@ export function Checkout() {
   })
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutForm, string>>>({})
 
-  const shipping = subtotal >= 1500 || subtotal === 0 ? 0 : 90
-  const total = subtotal + shipping
+  const [couponInput, setCouponInput] = useState('')
+  const [couponChecking, setCouponChecking] = useState(false)
+  const [couponError, setCouponError] = useState<string | null>(null)
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null)
+
+  const shipping = subtotal >= freeShippingThreshold || subtotal === 0 ? 0 : 90
+  const discount = appliedCoupon?.discount ?? 0
+  const total = Math.max(0, subtotal + shipping - discount)
+
+  const applyCoupon = async () => {
+    const code = couponInput.trim().toUpperCase()
+    if (!code) return
+    setCouponChecking(true)
+    setCouponError(null)
+    const { data, error } = await supabase
+      .from('coupons')
+      .select('*')
+      .eq('code', code)
+      .eq('active', true)
+      .maybeSingle()
+    setCouponChecking(false)
+
+    if (error || !data) {
+      setCouponError('That code isn\'t valid or has expired.')
+      return
+    }
+    if (data.expires_at && new Date(data.expires_at) < new Date()) {
+      setCouponError('That code has expired.')
+      return
+    }
+    if (data.usage_limit && data.times_used >= data.usage_limit) {
+      setCouponError('That code has reached its usage limit.')
+      return
+    }
+    if (subtotal < Number(data.min_order)) {
+      setCouponError(`Add ${fmt(Number(data.min_order) - subtotal)} more to use this code.`)
+      return
+    }
+
+    const discountAmount =
+      data.type === 'percentage' ? Math.round((subtotal * Number(data.amount)) / 100) : Number(data.amount)
+
+    setAppliedCoupon({ code: data.code, discount: Math.min(discountAmount, subtotal) })
+  }
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null)
+    setCouponInput('')
+    setCouponError(null)
+  }
 
   const update = (k: keyof CheckoutForm, v: string) => {
     setForm((f) => ({ ...f, [k]: v }))
@@ -96,6 +144,8 @@ export function Checkout() {
         city: form.city,
         subtotal,
         shipping,
+        discount,
+        coupon_code: appliedCoupon?.code ?? null,
         total,
         payment_method: form.payment,
         status: 'pending',
@@ -247,16 +297,58 @@ export function Checkout() {
               <span className="font-semibold text-espresso">{fmt(item.product.price * item.qty)}</span>
             </div>
           ))}
-          <div className="border-t border-espresso/8 mt-4 pt-4">
+
+          <div className="border-t border-espresso/8 mt-4 pt-4 mb-4">
+            <div className="font-body text-[11px] tracking-wide uppercase text-warmgray font-bold mb-2">
+              Coupon Code
+            </div>
+            {appliedCoupon ? (
+              <div className="flex items-center justify-between bg-sage/15 rounded-full px-4 py-2.5">
+                <span className="font-body text-sm text-sage font-bold">{appliedCoupon.code} applied</span>
+                <button onClick={removeCoupon} className="font-body text-xs text-sage underline font-semibold">
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <input
+                  value={couponInput}
+                  onChange={(e) => {
+                    setCouponInput(e.target.value)
+                    setCouponError(null)
+                  }}
+                  onKeyDown={(e) => e.key === 'Enter' && applyCoupon()}
+                  placeholder="Enter code"
+                  className="flex-1 soft-pill px-4 py-2.5 font-body text-sm text-espresso outline-none min-w-0"
+                />
+                <button
+                  onClick={applyCoupon}
+                  disabled={couponChecking || !couponInput.trim()}
+                  className="soft-pill px-4 py-2.5 font-body text-xs uppercase tracking-wide font-bold text-espresso disabled:opacity-50 shrink-0"
+                >
+                  {couponChecking ? '…' : 'Apply'}
+                </button>
+              </div>
+            )}
+            {couponError && <div className="font-body text-xs text-red-600 font-medium mt-2">{couponError}</div>}
+          </div>
+
+          <div className="border-t border-espresso/8 pt-4">
             <div className="flex justify-between font-body text-[13.5px] text-warmgray mb-2">
               <span>Subtotal</span>
               <span>{fmt(subtotal)}</span>
             </div>
-            <div className="flex justify-between font-body text-[13.5px] text-warmgray mb-3">
+            <div className="flex justify-between font-body text-[13.5px] text-warmgray mb-2">
               <span>Shipping</span>
               <span>{shipping === 0 ? 'Free' : fmt(shipping)}</span>
             </div>
-            <div className="flex justify-between font-display text-[20px] text-espresso font-extrabold">
+            {discount > 0 && (
+              <div className="flex justify-between font-body text-[13.5px] text-sage font-semibold mb-3">
+                <span>Discount</span>
+                <span>−{fmt(discount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-display text-[20px] text-espresso font-extrabold mt-1">
               <span>Total</span>
               <span>{fmt(total)}</span>
             </div>

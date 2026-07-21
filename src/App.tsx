@@ -29,6 +29,7 @@ const AdminProducts = lazy(() => import('./pages/admin/AdminProducts').then((m) 
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders').then((m) => ({ default: m.AdminOrders })))
 const AdminCustomers = lazy(() => import('./pages/admin/AdminCustomers').then((m) => ({ default: m.AdminCustomers })))
 const AdminCoupons = lazy(() => import('./pages/admin/AdminCoupons').then((m) => ({ default: m.AdminCoupons })))
+const AdminSettings = lazy(() => import('./pages/admin/AdminSettings').then((m) => ({ default: m.AdminSettings })))
 
 function StoreLayout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation()
@@ -79,6 +80,7 @@ export default function App() {
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="customers" element={<AdminCustomers />} />
                 <Route path="coupons" element={<AdminCoupons />} />
+                <Route path="settings" element={<AdminSettings />} />
               </Route>
 
               <Route path="*" element={<StoreLayout><NotFound /></StoreLayout>} />

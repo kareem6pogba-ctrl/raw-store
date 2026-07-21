@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { supabase } from './supabase'
 import type { CartItem, ColorOption, Product } from '../types'
 
 interface CartContextValue {
@@ -11,13 +12,30 @@ interface CartContextValue {
   clearCart: () => void
   cartCount: number
   subtotal: number
+  freeShippingThreshold: number
 }
 
 const CartContext = createContext<CartContextValue | null>(null)
 
+const DEFAULT_THRESHOLD = 1500
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
+  const [freeShippingThreshold, setFreeShippingThreshold] = useState(DEFAULT_THRESHOLD)
+
+  useEffect(() => {
+    supabase
+      .from('store_settings')
+      .select('free_shipping_threshold')
+      .eq('id', 1)
+      .single()
+      .then(({ data }) => {
+        if (data?.free_shipping_threshold != null) {
+          setFreeShippingThreshold(Number(data.free_shipping_threshold))
+        }
+      })
+  }, [])
 
   const addToCart = (product: Product, color: ColorOption, size: string, qty = 1) => {
     setCart((prev) => {
@@ -47,7 +65,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, cartOpen, setCartOpen, addToCart, updateQty, removeItem, clearCart, cartCount, subtotal }}
+      value={{
+        cart,
+        cartOpen,
+        setCartOpen,
+        addToCart,
+        updateQty,
+        removeItem,
+        clearCart,
+        cartCount,
+        subtotal,
+        freeShippingThreshold,
+      }}
     >
       {children}
     </CartContext.Provider>

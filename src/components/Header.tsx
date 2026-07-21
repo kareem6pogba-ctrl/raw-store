@@ -25,7 +25,7 @@ export function Header() {
   const [q, setQ] = useState('')
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [activeIndex, setActiveIndex] = useState(-1)
-  const { cartCount, setCartOpen } = useCart()
+  const { cartCount, setCartOpen, freeShippingThreshold } = useCart()
   const navigate = useNavigate()
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -84,7 +84,7 @@ export function Header() {
   return (
     <>
       <div className="bg-espresso text-linen text-center font-body text-[11px] tracking-[0.16em] uppercase py-2 font-medium">
-        Free shipping on all orders over EGP 1,500
+        Free shipping on all orders over EGP {freeShippingThreshold.toLocaleString()}
       </div>
 
       <header className="sticky top-4 z-40 px-4 md:px-8">
