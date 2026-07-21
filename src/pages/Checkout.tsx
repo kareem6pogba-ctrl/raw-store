@@ -24,18 +24,18 @@ function Field({
 }) {
   return (
     <label className="block">
-      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">{label}</div>
+      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">{label}</div>
       <input
         type={type}
         value={value}
         disabled={disabled}
         onChange={(e) => onChange && onChange(e.target.value)}
         aria-invalid={!!error}
-        className={`w-full border-0 border-b bg-transparent py-2.5 font-body text-[14.5px] text-espresso outline-none ${
-          error ? 'border-red-600' : 'border-espresso/10 focus:border-espresso'
+        className={`w-full soft-pill px-5 py-3.5 font-body text-[14.5px] text-espresso outline-none ${
+          error ? 'ring-2 ring-red-500' : ''
         } ${disabled ? 'opacity-60' : ''}`}
       />
-      {error && <div className="font-body text-xs text-red-600 mt-1.5">{error}</div>}
+      {error && <div className="font-body text-xs text-red-600 mt-1.5 font-medium">{error}</div>}
     </label>
   )
 }
@@ -81,7 +81,7 @@ export function Checkout() {
   const placeOrder = async () => {
     setSubmitting(true)
     setSubmitError(null)
-    const orderNum = `RAW-${Math.floor(10000 + Math.random() * 89999)}`
+    const orderNum = `RAWW-${Math.floor(10000 + Math.random() * 89999)}`
 
     try {
       const orderId = crypto.randomUUID()
@@ -128,54 +128,63 @@ export function Checkout() {
 
   if (cart.length === 0 && step < 3) {
     return (
-      <div className="max-w-[700px] mx-auto px-8 py-24 text-center">
-        <h2 className="font-display text-[30px] text-espresso mb-4">Your bag is empty</h2>
-        <p className="font-body text-warmgray mb-7">Add something raw before checking out.</p>
-        <Button onClick={() => navigate('/shop')}>Browse the Shop</Button>
+      <div className="max-w-[700px] mx-auto px-4 md:px-8 py-24 text-center">
+        <div className="soft-panel p-12">
+          <h2 className="text-mega text-espresso text-[32px] mb-4">Your bag is empty</h2>
+          <p className="font-body text-warmgray mb-7">Add something rawwesome before checking out.</p>
+          <Button onClick={() => navigate('/shop')}>Browse the Shop</Button>
+        </div>
       </div>
     )
   }
 
   if (step === 3) {
     return (
-      <div className="max-w-[620px] mx-auto px-8 py-24 text-center">
-        <div className="font-body text-[15px] tracking-wide uppercase text-sage mb-5">Order Confirmed</div>
-        <h1 className="font-display text-[40px] text-espresso mb-5 font-normal">
-          Thank you, {form.name.split(' ')[0] || 'friend'}.
-        </h1>
-        <p className="font-body text-[15px] leading-loose text-warmgray mb-3">
-          Order <strong className="text-espresso">#{orderNumber}</strong> has been placed.
-        </p>
-        <p className="font-body text-sm leading-loose text-warmgray mb-10">
-          A confirmation is on its way to {form.email || 'your inbox'}. Expect delivery in 2–4 business days.
-        </p>
-        <Button onClick={() => navigate('/')}>Continue Shopping</Button>
+      <div className="max-w-[620px] mx-auto px-4 md:px-8 py-24 text-center">
+        <div className="soft-panel p-12">
+          <div className="font-body text-[13px] tracking-wide uppercase text-sage font-bold mb-5">Order Confirmed</div>
+          <h1 className="text-mega text-espresso text-[clamp(32px,5vw,48px)] mb-5">
+            Thank you, {form.name.split(' ')[0] || 'friend'}.
+          </h1>
+          <p className="font-body text-[15px] leading-loose text-warmgray mb-3">
+            Order <strong className="text-espresso">#{orderNumber}</strong> has been placed.
+          </p>
+          <p className="font-body text-sm leading-loose text-warmgray mb-10">
+            A confirmation is on its way to {form.email || 'your inbox'}. Expect delivery in 2–4 business days.
+          </p>
+          <Button onClick={() => navigate('/')}>Continue Shopping</Button>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="max-w-[1100px] mx-auto px-8 pt-14 pb-24">
-      <h1 className="font-display text-[38px] text-espresso font-normal mb-10">Checkout</h1>
-      <div className="flex gap-5 mb-12 font-body text-[12.5px] tracking-wide uppercase">
+    <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-10 pb-24">
+      <h1 className="text-mega text-espresso text-[clamp(34px,5vw,52px)] mb-8">Checkout</h1>
+      <div className="soft-pill inline-flex gap-1 mb-10 p-1.5">
         {['Contact & Address', 'Payment', 'Confirmation'].map((s, i) => (
-          <span key={s} className={step === i + 1 ? 'text-espresso' : 'text-warmgray/50'}>
+          <span
+            key={s}
+            className={`font-body text-[11.5px] tracking-wide uppercase font-bold px-4 py-2.5 rounded-full ${
+              step === i + 1 ? 'bg-espresso text-linen' : 'text-warmgray/60'
+            }`}
+          >
             {i + 1}. {s}
           </span>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-16">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-8">
+        <div className="soft-panel p-7 md:p-8">
           {step === 1 && (
-            <div className="grid gap-4.5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
+            <div className="grid gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Field label="Full Name" value={form.name} onChange={(v) => update('name', v)} error={errors.name} />
                 <Field label="Phone" value={form.phone} onChange={(v) => update('phone', v)} error={errors.phone} type="tel" />
               </div>
               <Field label="Email" value={form.email} onChange={(v) => update('email', v)} error={errors.email} type="email" />
               <Field label="Address" value={form.address} onChange={(v) => update('address', v)} error={errors.address} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Field label="City" value={form.city} onChange={(v) => update('city', v)} error={errors.city} />
                 <Field label="Country" value="Egypt" disabled />
               </div>
@@ -197,8 +206,8 @@ export function Checkout() {
                 ].map((p) => (
                   <label
                     key={p.id}
-                    className={`flex items-center gap-3.5 border px-5 py-4.5 cursor-pointer ${
-                      form.payment === p.id ? 'border-espresso' : 'border-espresso/10'
+                    className={`flex items-center gap-3.5 rounded-2xl px-5 py-4.5 cursor-pointer transition-all ${
+                      form.payment === p.id ? 'bg-espresso/6 ring-2 ring-espresso' : 'soft-pill'
                     }`}
                   >
                     <input
@@ -207,14 +216,14 @@ export function Checkout() {
                       onChange={() => update('payment', p.id)}
                     />
                     <div>
-                      <div className="font-body text-[14.5px] text-espresso font-medium">{p.label}</div>
+                      <div className="font-body text-[14.5px] text-espresso font-bold">{p.label}</div>
                       <div className="font-body text-[12.5px] text-warmgray">{p.d}</div>
                     </div>
                   </label>
                 ))}
               </div>
               {submitError && (
-                <div className="font-body text-sm text-red-700 mb-4">{submitError}</div>
+                <div className="font-body text-sm text-red-700 mb-4 font-medium">{submitError}</div>
               )}
               <div className="flex gap-3.5">
                 <Button variant="outline" onClick={() => setStep(1)}>
@@ -228,17 +237,17 @@ export function Checkout() {
           )}
         </div>
 
-        <div className="bg-white p-7 self-start">
-          <div className="font-body text-[13px] tracking-wide uppercase text-espresso mb-5">Order Summary</div>
+        <div className="soft-panel p-7 self-start">
+          <div className="font-body text-[13px] tracking-wide uppercase text-espresso font-bold mb-5">Order Summary</div>
           {cart.map((item, i) => (
             <div key={i} className="flex justify-between mb-3 font-body text-[13.5px] text-warmgray">
               <span>
                 {item.product.name} × {item.qty}
               </span>
-              <span>{fmt(item.product.price * item.qty)}</span>
+              <span className="font-semibold text-espresso">{fmt(item.product.price * item.qty)}</span>
             </div>
           ))}
-          <div className="border-t border-espresso/10 mt-4 pt-4">
+          <div className="border-t border-espresso/8 mt-4 pt-4">
             <div className="flex justify-between font-body text-[13.5px] text-warmgray mb-2">
               <span>Subtotal</span>
               <span>{fmt(subtotal)}</span>
@@ -247,7 +256,7 @@ export function Checkout() {
               <span>Shipping</span>
               <span>{shipping === 0 ? 'Free' : fmt(shipping)}</span>
             </div>
-            <div className="flex justify-between font-display text-[19px] text-espresso">
+            <div className="flex justify-between font-display text-[20px] text-espresso font-extrabold">
               <span>Total</span>
               <span>{fmt(total)}</span>
             </div>

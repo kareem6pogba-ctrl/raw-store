@@ -21,7 +21,7 @@ export function AdminLayout() {
   return (
     <div className="min-h-screen bg-linen flex">
       <aside className="w-[220px] bg-espresso text-linen flex flex-col shrink-0">
-        <div className="px-7 py-8 font-display text-2xl">RAW</div>
+        <div className="px-7 py-8 font-display text-2xl">RAWW</div>
         <nav className="flex-1 px-4">
           {NAV.map((n) => (
             <NavLink

@@ -26,7 +26,7 @@ export function AdminLogin() {
   return (
     <div className="min-h-screen bg-linen flex items-center justify-center px-8">
       <div className="w-full max-w-[380px]">
-        <div className="font-display text-[32px] text-espresso text-center mb-1">RAW</div>
+        <div className="font-display text-[32px] text-espresso text-center mb-1">RAWW</div>
         <div className="font-body text-xs tracking-widest uppercase text-sage text-center mb-10">
           Admin
         </div>

@@ -43,7 +43,7 @@ export function Shop() {
         <div className="font-body text-xs tracking-[0.22em] uppercase text-sage mb-3.5">
           {query ? `Results for "${query}"` : 'The Full Collection'}
         </div>
-        <h1 className="text-mega text-espresso text-[clamp(40px,6vw,80px)]">Shop RAW</h1>
+        <h1 className="text-mega text-espresso text-[clamp(40px,6vw,80px)]">Shop RAWW</h1>
       </div>
 
       <div className="flex justify-between items-center mb-10 flex-wrap gap-4">

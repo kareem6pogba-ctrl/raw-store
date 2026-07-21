@@ -92,10 +92,10 @@ export function Header() {
           {/* Logo badge — fixed circle, matches reference */}
           <Link
             to="/"
-            aria-label="RAW home"
+            aria-label="RAWW home"
             className="icon-circle soft-pill w-14 h-14 shrink-0 focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-2"
           >
-            <span className="font-display font-black text-[13px] text-espresso tracking-tight">RAW</span>
+            <span className="font-display font-black text-[13px] text-espresso tracking-tight">RAWW</span>
           </Link>
 
           {/* Desktop nav pill */}

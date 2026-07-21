@@ -1,4 +1,4 @@
-# RAW — Natural Fibers, Unhurried Silhouettes
+# RAWW — Natural Fibers, Unhurried Silhouettes
 
 A premium fashion e-commerce storefront built with React, Vite, TypeScript, Tailwind CSS, and Supabase.
 

@@ -83,7 +83,7 @@ export function Home() {
         <Reveal delay={400}>
           <div className="md:col-span-7 mt-8 md:mt-10 md:max-w-[420px]">
             <p className="font-body text-[16.5px] leading-relaxed text-warmgray mb-8">
-              RAW works in natural fibers and quiet silhouettes — pieces designed to fade,
+              RAWW works in natural fibers and quiet silhouettes — pieces designed to fade,
               soften, and belong to you a little more with every season.
             </p>
             <div className="flex gap-4 items-center">
@@ -134,7 +134,7 @@ export function Home() {
             <em className="italic font-medium">good cloth</em>.
           </h2>
           <p className="font-body text-[15.5px] leading-loose text-warmgray mb-7 max-w-[440px]">
-            Every RAW piece begins with a fabric, not a sketch. We source linen and cotton
+            Every RAWW piece begins with a fabric, not a sketch. We source linen and cotton
             for their hand-feel first, then let the silhouette follow. The result is a
             wardrobe you reach for out of habit, not obligation.
           </p>
