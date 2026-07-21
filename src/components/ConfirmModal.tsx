@@ -20,13 +20,13 @@ export function ConfirmModal({
   if (!open) return null
   return (
     <div
-      className="fixed inset-0 bg-espresso/40 z-[70] flex items-center justify-center p-6"
+      className="fixed inset-0 bg-espresso/40 z-[70] flex items-center justify-center p-4"
       role="alertdialog"
       aria-modal="true"
       aria-labelledby="confirm-modal-title"
     >
-      <div className="bg-linen w-full max-w-[420px] p-7">
-        <h2 id="confirm-modal-title" className="font-display text-xl text-espresso mb-3">
+      <div className="bg-[#FCFAF5] rounded-[28px] w-full max-w-[420px] p-8 shadow-2xl">
+        <h2 id="confirm-modal-title" className="font-display text-xl text-espresso font-extrabold mb-3">
           {title}
         </h2>
         <p className="font-body text-sm text-warmgray leading-relaxed mb-7">{message}</p>
@@ -36,7 +36,7 @@ export function ConfirmModal({
           </Button>
           <Button
             onClick={onConfirm}
-            style={danger ? { background: '#b91c1c', borderColor: '#b91c1c', color: '#fff' } : {}}
+            style={danger ? { background: '#b91c1c', color: '#fff', boxShadow: '0 20px 40px -18px rgba(185,28,28,0.5)' } : {}}
           >
             {confirmLabel}
           </Button>

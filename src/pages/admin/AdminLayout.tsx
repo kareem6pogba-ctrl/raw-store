@@ -13,24 +13,34 @@ export function AdminLayout() {
   const { session, loading, signOut } = useAuth()
 
   if (loading) {
-    return <div className="min-h-screen bg-linen flex items-center justify-center font-body text-warmgray">Loading…</div>
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center font-body text-warmgray"
+        style={{ background: 'linear-gradient(180deg, #FAF6EF 0%, #EFE7D8 100%)' }}
+      >
+        Loading…
+      </div>
+    )
   }
 
   if (!session) return <Navigate to="/admin/login" replace />
 
   return (
-    <div className="min-h-screen bg-linen flex">
-      <aside className="w-[220px] bg-espresso text-linen flex flex-col shrink-0">
-        <div className="px-7 py-8 font-display text-2xl">RAWW</div>
-        <nav className="flex-1 px-4">
+    <div
+      className="min-h-screen flex flex-col md:flex-row p-4 gap-4"
+      style={{ background: 'linear-gradient(180deg, #FAF6EF 0%, #EFE7D8 100%)' }}
+    >
+      <aside className="soft-panel-dark w-full md:w-[240px] shrink-0 flex md:flex-col p-4 md:p-6 items-center md:items-stretch gap-2">
+        <div className="font-display font-black text-2xl text-linen px-2 md:mb-6 shrink-0">RAWW</div>
+        <nav className="flex md:flex-col gap-1 flex-1 overflow-x-auto">
           {NAV.map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.end}
               className={({ isActive }) =>
-                `block px-4 py-3 mb-1 font-body text-sm rounded-sm ${
-                  isActive ? 'bg-linen/10 text-linen' : 'text-linen/65 hover:text-linen'
+                `block px-4 py-2.5 font-body text-sm font-semibold rounded-full whitespace-nowrap transition-colors ${
+                  isActive ? 'bg-linen text-espresso' : 'text-linen/65 hover:text-linen hover:bg-white/5'
                 }`
               }
             >
@@ -38,16 +48,14 @@ export function AdminLayout() {
             </NavLink>
           ))}
         </nav>
-        <div className="px-4 pb-7">
-          <button
-            onClick={() => signOut()}
-            className="w-full text-left px-4 py-3 font-body text-sm text-linen/65 hover:text-linen"
-          >
-            Sign Out
-          </button>
-        </div>
+        <button
+          onClick={() => signOut()}
+          className="px-4 py-2.5 font-body text-sm font-semibold text-linen/65 hover:text-linen rounded-full hover:bg-white/5 transition-colors shrink-0 md:mt-2"
+        >
+          Sign Out
+        </button>
       </aside>
-      <main className="flex-1 min-w-0">
+      <main className="flex-1 min-w-0 soft-panel overflow-hidden">
         <Outlet />
       </main>
     </div>

@@ -62,8 +62,8 @@ export function AdminCustomers() {
   }, [])
 
   return (
-    <div className="px-10 py-10">
-      <h1 className="font-display text-[32px] text-espresso font-normal mb-2">Customers</h1>
+    <div className="p-6 md:p-10">
+      <h1 className="text-mega text-espresso text-[32px] mb-2">Customers</h1>
       <p className="font-body text-sm text-warmgray mb-8">
         Derived automatically from order history — no separate signup required.
       </p>
@@ -71,10 +71,10 @@ export function AdminCustomers() {
       {loading ? (
         <div className="font-body text-warmgray">Loading…</div>
       ) : customers.length === 0 ? (
-        <div className="bg-white p-6 font-body text-sm text-warmgray">No customers yet.</div>
+        <div className="bg-linen/60 rounded-3xl p-6 font-body text-sm text-warmgray">No customers yet.</div>
       ) : (
-        <div className="bg-white">
-          <div className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3 border-b border-espresso/10 font-body text-[11px] tracking-wide uppercase text-warmgray">
+        <div className="bg-linen/60 rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
             <span>Name</span>
             <span>Email</span>
             <span>Phone</span>
@@ -85,14 +85,14 @@ export function AdminCustomers() {
           {customers.map((c) => (
             <div
               key={c.email + c.name}
-              className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/10 items-center"
+              className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0"
             >
-              <span className="font-body text-sm text-espresso">{c.name}</span>
+              <span className="font-body text-sm text-espresso font-semibold">{c.name}</span>
               <span className="font-body text-sm text-warmgray truncate">{c.email}</span>
               <span className="font-body text-sm text-warmgray">{c.phone}</span>
               <span className="font-body text-sm text-warmgray">{c.city}</span>
               <span className="font-body text-sm text-warmgray">{c.orderCount}</span>
-              <span className="font-body text-sm text-espresso">{fmt(c.totalSpent)}</span>
+              <span className="font-body text-sm text-espresso font-bold">{fmt(c.totalSpent)}</span>
             </div>
           ))}
         </div>

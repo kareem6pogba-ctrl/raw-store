@@ -34,7 +34,7 @@ export function ImageUploadField({
 
   return (
     <div>
-      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">{label}</div>
+      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">{label}</div>
       <div
         onDragOver={(e) => {
           e.preventDefault()
@@ -47,23 +47,23 @@ export function ImageUploadField({
           handleFile(e.dataTransfer.files?.[0])
         }}
         onClick={() => inputRef.current?.click()}
-        className={`relative flex items-center gap-4 border px-4 py-3 cursor-pointer transition-colors ${
-          dragOver ? 'border-espresso bg-beige/20' : 'border-espresso/15 bg-white'
+        className={`relative flex items-center gap-4 rounded-2xl px-4 py-3 cursor-pointer transition-all ${
+          dragOver ? 'bg-beige/25 ring-2 ring-espresso' : 'bg-white shadow-[0_10px_24px_-16px_rgba(58,36,24,0.15)]'
         }`}
       >
         {value ? (
-          <img src={value} alt="" className="w-14 h-16 object-cover shrink-0" />
+          <img src={value} alt="" className="w-14 h-16 object-cover shrink-0 rounded-xl" />
         ) : (
-          <div className="w-14 h-16 bg-linen shrink-0 flex items-center justify-center text-warmgray text-xs">
+          <div className="w-14 h-16 bg-linen shrink-0 flex items-center justify-center text-warmgray text-xs rounded-xl">
             —
           </div>
         )}
         <div className="flex-1 min-w-0">
           {uploading ? (
-            <span className="font-body text-sm text-warmgray">Uploading…</span>
+            <span className="font-body text-sm text-warmgray font-medium">Uploading…</span>
           ) : (
             <>
-              <span className="font-body text-sm text-espresso">Drop image here or click to browse</span>
+              <span className="font-body text-sm text-espresso font-medium">Drop image here or click to browse</span>
               {value && <div className="font-body text-xs text-warmgray truncate mt-0.5">{value}</div>}
             </>
           )}
@@ -76,12 +76,12 @@ export function ImageUploadField({
           onChange={(e) => handleFile(e.target.files?.[0])}
         />
       </div>
-      {error && <div className="font-body text-xs text-red-600 mt-1.5">{error}</div>}
+      {error && <div className="font-body text-xs text-red-600 mt-1.5 font-medium">{error}</div>}
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="…or paste an image URL directly"
-        className="w-full border-0 border-b border-espresso/10 bg-transparent py-2 mt-2 font-body text-xs text-warmgray outline-none"
+        className="w-full bg-transparent py-2 mt-2 font-body text-xs text-warmgray outline-none"
       />
     </div>
   )

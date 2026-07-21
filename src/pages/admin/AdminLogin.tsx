@@ -24,34 +24,37 @@ export function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-linen flex items-center justify-center px-8">
-      <div className="w-full max-w-[380px]">
-        <div className="font-display text-[32px] text-espresso text-center mb-1">RAWW</div>
-        <div className="font-body text-xs tracking-widest uppercase text-sage text-center mb-10">
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ background: 'linear-gradient(180deg, #FAF6EF 0%, #EFE7D8 100%)' }}
+    >
+      <div className="w-full max-w-[400px] soft-panel p-10">
+        <div className="font-display font-black text-[32px] text-espresso text-center mb-1">RAWW</div>
+        <div className="font-body text-xs tracking-widest uppercase text-sage text-center font-bold mb-10">
           Admin
         </div>
         <form onSubmit={handleSubmit} className="grid gap-5">
           <label className="block">
-            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">Email</div>
+            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">Email</div>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none focus:border-espresso"
+              className="w-full soft-pill px-4 py-3.5 font-body text-sm text-espresso outline-none"
             />
           </label>
           <label className="block">
-            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">Password</div>
+            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">Password</div>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none focus:border-espresso"
+              className="w-full soft-pill px-4 py-3.5 font-body text-sm text-espresso outline-none"
             />
           </label>
-          {error && <div className="font-body text-sm text-red-700">{error}</div>}
+          {error && <div className="font-body text-sm text-red-700 font-medium">{error}</div>}
           <Button fullWidth disabled={loading}>
             {loading ? 'Signing In…' : 'Sign In'}
           </Button>

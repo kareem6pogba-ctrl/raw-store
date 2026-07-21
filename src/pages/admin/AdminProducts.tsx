@@ -88,9 +88,9 @@ export function AdminProducts() {
   }
 
   return (
-    <div className="px-10 py-10">
+    <div className="p-6 md:p-10">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="font-display text-[32px] text-espresso font-normal">Products</h1>
+        <h1 className="text-mega text-espresso text-[32px]">Products</h1>
         <Button small onClick={openNew}>
           + Add Product
         </Button>
@@ -99,8 +99,8 @@ export function AdminProducts() {
       {loading ? (
         <div className="font-body text-warmgray">Loading…</div>
       ) : (
-        <div className="bg-white">
-          <div className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3 border-b border-espresso/10 font-body text-[11px] tracking-wide uppercase text-warmgray">
+        <div className="bg-linen/60 rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
             <span></span>
             <span>Product</span>
             <span>Category</span>
@@ -109,26 +109,26 @@ export function AdminProducts() {
             <span>Actions</span>
           </div>
           {products.map((p) => (
-            <div key={p.id} className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/10 items-center">
-              <div className="w-11 h-14 bg-beige overflow-hidden">
+            <div key={p.id} className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0">
+              <div className="w-11 h-14 bg-beige overflow-hidden rounded-xl">
                 <img src={p.image_main ?? ''} alt={p.name} className="w-full h-full object-cover" />
               </div>
-              <div className="font-body text-sm text-espresso">{p.name}</div>
+              <div className="font-body text-sm text-espresso font-semibold">{p.name}</div>
               <div className="font-body text-sm text-warmgray">{p.category}</div>
-              <div className="font-body text-sm text-warmgray">{fmt(p.price)}</div>
+              <div className="font-body text-sm text-warmgray font-medium">{fmt(p.price)}</div>
               <button
                 onClick={() => togglePublish(p)}
-                className={`font-body text-xs uppercase tracking-wide w-fit px-2.5 py-1 ${
+                className={`font-body text-xs uppercase tracking-wide font-bold w-fit px-3 py-1.5 rounded-full ${
                   p.is_published ? 'bg-sage/20 text-sage' : 'bg-warmgray/10 text-warmgray'
                 }`}
               >
                 {p.is_published ? 'Published' : 'Draft'}
               </button>
               <div className="flex gap-4">
-                <button onClick={() => openEdit(p)} className="font-body text-xs text-espresso underline">
+                <button onClick={() => openEdit(p)} className="font-body text-xs text-espresso underline font-semibold">
                   Edit
                 </button>
-                <button onClick={() => setPendingDelete(p)} className="font-body text-xs text-red-700 underline">
+                <button onClick={() => setPendingDelete(p)} className="font-body text-xs text-red-700 underline font-semibold">
                   Delete
                 </button>
               </div>
@@ -178,9 +178,9 @@ function ProductForm({
   const set = <K extends keyof Product>(k: K, v: Product[K]) => setForm((f) => ({ ...f, [k]: v }))
 
   return (
-    <div className="fixed inset-0 bg-espresso/40 z-50 flex items-center justify-center p-6">
-      <div className="bg-linen w-full max-w-[560px] max-h-[88vh] overflow-y-auto p-8">
-        <h2 className="font-display text-2xl text-espresso mb-6">{isNew ? 'Add Product' : 'Edit Product'}</h2>
+    <div className="fixed inset-0 bg-espresso/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-[#FCFAF5] rounded-[32px] w-full max-w-[560px] max-h-[88vh] overflow-y-auto p-8 shadow-2xl">
+        <h2 className="font-display text-2xl text-espresso font-extrabold mb-6">{isNew ? 'Add Product' : 'Edit Product'}</h2>
         <div className="grid gap-4">
           {isNew && (
             <TextField label="ID (leave blank to auto-generate from name)" value={form.id} onChange={(v) => set('id', v)} />
@@ -189,11 +189,11 @@ function ProductForm({
           <div className="grid grid-cols-2 gap-4">
             <TextField label="Price (EGP)" type="number" value={String(form.price)} onChange={(v) => set('price', Number(v))} />
             <div>
-              <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">Category</div>
+              <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">Category</div>
               <select
                 value={form.category}
                 onChange={(e) => set('category', e.target.value)}
-                className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+                className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
               >
                 {['Tops', 'Bottoms', 'Sets'].map((c) => (
                   <option key={c}>{c}</option>
@@ -212,7 +212,7 @@ function ProductForm({
             onChange={(v) => set('sizes', v.split(',').map((s) => s.trim()).filter(Boolean))}
           />
           <div>
-            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">
+            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">
               Colors (name:hex, comma-separated — e.g. Ivory:#F4EDE2, Sage:#7A8471)
             </div>
             <input
@@ -229,7 +229,7 @@ function ProductForm({
                     .filter((c) => c.name)
                 )
               }
-              className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+              className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
             />
           </div>
           <TextField label="Stock" type="number" value={String(form.stock)} onChange={(v) => set('stock', Number(v))} />
@@ -239,7 +239,7 @@ function ProductForm({
               checked={form.is_published}
               onChange={(e) => set('is_published', e.target.checked)}
             />
-            <span className="font-body text-sm text-espresso">Published (visible on live site)</span>
+            <span className="font-body text-sm text-espresso font-medium">Published (visible on live site)</span>
           </label>
         </div>
 
@@ -267,12 +267,12 @@ function TextField({
 }) {
   return (
     <label className="block">
-      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">{label}</div>
+      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">{label}</div>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+        className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
       />
     </label>
   )
@@ -281,12 +281,12 @@ function TextField({
 function TextArea({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <label className="block">
-      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">{label}</div>
+      <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">{label}</div>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={3}
-        className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+        className="w-full rounded-3xl bg-white shadow-[0_10px_24px_-16px_rgba(58,36,24,0.15)] px-4 py-3 font-body text-sm text-espresso outline-none"
       />
     </label>
   )

@@ -80,9 +80,9 @@ export function AdminCoupons() {
   }
 
   return (
-    <div className="px-10 py-10">
+    <div className="p-6 md:p-10">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="font-display text-[32px] text-espresso font-normal">Coupons</h1>
+        <h1 className="text-mega text-espresso text-[32px]">Coupons</h1>
         <Button
           small
           onClick={() => {
@@ -97,8 +97,8 @@ export function AdminCoupons() {
       {loading ? (
         <div className="font-body text-warmgray">Loading…</div>
       ) : (
-        <div className="bg-white">
-          <div className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3 border-b border-espresso/10 font-body text-[11px] tracking-wide uppercase text-warmgray">
+        <div className="bg-linen/60 rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
             <span>Code</span>
             <span>Discount</span>
             <span>Min. Order</span>
@@ -107,8 +107,8 @@ export function AdminCoupons() {
             <span>Actions</span>
           </div>
           {coupons.map((c) => (
-            <div key={c.code} className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/10 items-center">
-              <span className="font-body text-sm text-espresso font-medium">{c.code}</span>
+            <div key={c.code} className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0">
+              <span className="font-body text-sm text-espresso font-bold">{c.code}</span>
               <span className="font-body text-sm text-warmgray">
                 {c.type === 'percentage' ? `${c.amount}%` : `EGP ${c.amount}`}
               </span>
@@ -119,13 +119,13 @@ export function AdminCoupons() {
               </span>
               <button
                 onClick={() => toggleActive(c)}
-                className={`font-body text-xs uppercase tracking-wide w-fit px-2.5 py-1 ${
+                className={`font-body text-xs uppercase tracking-wide font-bold w-fit px-3 py-1.5 rounded-full ${
                   c.active ? 'bg-sage/20 text-sage' : 'bg-warmgray/10 text-warmgray'
                 }`}
               >
                 {c.active ? 'Active' : 'Disabled'}
               </button>
-              <button onClick={() => setPendingDelete(c)} className="font-body text-xs text-red-700 underline w-fit">
+              <button onClick={() => setPendingDelete(c)} className="font-body text-xs text-red-700 underline font-semibold w-fit">
                 Delete
               </button>
             </div>
@@ -135,52 +135,52 @@ export function AdminCoupons() {
       )}
 
       {showForm && (
-        <div className="fixed inset-0 bg-espresso/40 z-50 flex items-center justify-center p-6">
-          <div className="bg-linen w-full max-w-[440px] p-7">
-            <h2 className="font-display text-xl text-espresso mb-6">Add Coupon</h2>
+        <div className="fixed inset-0 bg-espresso/40 z-50 flex items-center justify-center p-4">
+          <div className="bg-[#FCFAF5] rounded-[32px] w-full max-w-[440px] p-8 shadow-2xl">
+            <h2 className="font-display text-xl text-espresso font-extrabold mb-6">Add Coupon</h2>
             <div className="grid gap-4">
               <label className="block">
-                <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">Code</div>
+                <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">Code</div>
                 <input
                   value={form.code}
                   onChange={(e) => setForm((f) => ({ ...f, code: e.target.value }))}
-                  className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+                  className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
                 />
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <label className="block">
-                  <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">Type</div>
+                  <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">Type</div>
                   <select
                     value={form.type}
                     onChange={(e) => setForm((f) => ({ ...f, type: e.target.value as Coupon['type'] }))}
-                    className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+                    className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
                   >
                     <option value="percentage">Percentage</option>
                     <option value="fixed">Fixed Amount</option>
                   </select>
                 </label>
                 <label className="block">
-                  <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">Amount</div>
+                  <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">Amount</div>
                   <input
                     type="number"
                     value={form.amount}
                     onChange={(e) => setForm((f) => ({ ...f, amount: Number(e.target.value) }))}
-                    className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+                    className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
                   />
                 </label>
               </div>
               <label className="block">
-                <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray mb-2">
+                <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">
                   Minimum Order (EGP)
                 </div>
                 <input
                   type="number"
                   value={form.min_order}
                   onChange={(e) => setForm((f) => ({ ...f, min_order: Number(e.target.value) }))}
-                  className="w-full border border-espresso/15 bg-white px-3.5 py-3 font-body text-sm text-espresso outline-none"
+                  className="w-full soft-pill px-4 py-3 font-body text-sm text-espresso outline-none"
                 />
               </label>
-              {error && <div className="font-body text-sm text-red-700">{error}</div>}
+              {error && <div className="font-body text-sm text-red-700 font-medium">{error}</div>}
             </div>
             <div className="flex gap-3.5 mt-8">
               <Button variant="outline" onClick={() => setShowForm(false)}>
