@@ -99,42 +99,44 @@ export function AdminProducts() {
       {loading ? (
         <div className="font-body text-warmgray">Loading…</div>
       ) : (
-        <div className="bg-linen/60 rounded-3xl overflow-hidden">
-          <div className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
-            <span></span>
-            <span>Product</span>
-            <span>Category</span>
-            <span>Price</span>
-            <span>Status</span>
-            <span>Actions</span>
-          </div>
-          {products.map((p) => (
-            <div key={p.id} className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0">
-              <div className="w-11 h-14 bg-beige overflow-hidden rounded-xl">
-                <img src={p.image_main ?? ''} alt={p.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="font-body text-sm text-espresso font-semibold">{p.name}</div>
-              <div className="font-body text-sm text-warmgray">{p.category}</div>
-              <div className="font-body text-sm text-warmgray font-medium">{fmt(p.price)}</div>
-              <button
-                onClick={() => togglePublish(p)}
-                className={`font-body text-xs uppercase tracking-wide font-bold w-fit px-3 py-1.5 rounded-full ${
-                  p.is_published ? 'bg-sage/20 text-sage' : 'bg-warmgray/10 text-warmgray'
-                }`}
-              >
-                {p.is_published ? 'Published' : 'Draft'}
-              </button>
-              <div className="flex gap-4">
-                <button onClick={() => openEdit(p)} className="font-body text-xs text-espresso underline font-semibold">
-                  Edit
-                </button>
-                <button onClick={() => setPendingDelete(p)} className="font-body text-xs text-red-700 underline font-semibold">
-                  Delete
-                </button>
-              </div>
+        <div className="bg-linen/60 rounded-3xl overflow-x-auto">
+          <div className="min-w-[720px]">
+            <div className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
+              <span></span>
+              <span>Product</span>
+              <span>Category</span>
+              <span>Price</span>
+              <span>Status</span>
+              <span>Actions</span>
             </div>
-          ))}
-          {products.length === 0 && <div className="p-6 font-body text-sm text-warmgray">No products yet.</div>}
+            {products.map((p) => (
+              <div key={p.id} className="grid grid-cols-[60px_1.6fr_0.7fr_0.7fr_0.7fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0">
+                <div className="w-11 h-14 bg-beige overflow-hidden rounded-xl">
+                  <img src={p.image_main ?? ''} alt={p.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="font-body text-sm text-espresso font-semibold">{p.name}</div>
+                <div className="font-body text-sm text-warmgray">{p.category}</div>
+                <div className="font-body text-sm text-warmgray font-medium">{fmt(p.price)}</div>
+                <button
+                  onClick={() => togglePublish(p)}
+                  className={`font-body text-xs uppercase tracking-wide font-bold w-fit px-3 py-1.5 rounded-full ${
+                    p.is_published ? 'bg-sage/20 text-sage' : 'bg-warmgray/10 text-warmgray'
+                  }`}
+                >
+                  {p.is_published ? 'Published' : 'Draft'}
+                </button>
+                <div className="flex gap-4">
+                  <button onClick={() => openEdit(p)} className="font-body text-xs text-espresso underline font-semibold">
+                    Edit
+                  </button>
+                  <button onClick={() => setPendingDelete(p)} className="font-body text-xs text-red-700 underline font-semibold">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+            {products.length === 0 && <div className="p-6 font-body text-sm text-warmgray">No products yet.</div>}
+          </div>
         </div>
       )}
 

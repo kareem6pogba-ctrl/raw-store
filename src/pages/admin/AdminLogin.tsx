@@ -29,7 +29,7 @@ export function AdminLogin() {
       style={{ background: 'linear-gradient(180deg, #FAF6EF 0%, #EFE7D8 100%)' }}
     >
       <div className="w-full max-w-[400px] soft-panel p-10">
-        <div className="font-display font-black text-[32px] text-espresso text-center mb-1">RAWW</div>
+        <div className="font-logo text-[32px] text-espresso text-center mb-1">RAWW</div>
         <div className="font-body text-xs tracking-widest uppercase text-sage text-center font-bold mb-10">
           Admin
         </div>

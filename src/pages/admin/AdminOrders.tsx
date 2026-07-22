@@ -80,13 +80,13 @@ export function AdminOrders() {
       {loading ? (
         <div className="font-body text-warmgray">Loading…</div>
       ) : (
-        <div className="bg-linen/60 rounded-3xl overflow-hidden">
+        <div className="bg-linen/60 rounded-3xl overflow-x-auto">
           {list.length === 0 && <div className="p-6 font-body text-sm text-warmgray">No orders match this filter.</div>}
           {list.map((o) => {
             const orderItems = items.filter((i) => i.order_id === o.id)
             const isOpen = expanded === o.id
             return (
-              <div key={o.id} className="border-b border-espresso/8 last:border-0">
+              <div key={o.id} className="border-b border-espresso/8 last:border-0 min-w-[760px]">
                 <div
                   className="grid grid-cols-[1.3fr_1fr_1fr_0.8fr_0.9fr_40px] gap-4 px-6 py-4 items-center cursor-pointer"
                   onClick={() => setExpanded(isOpen ? null : o.id)}

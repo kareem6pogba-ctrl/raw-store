@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600&family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -9,6 +9,7 @@
   --color-warmgray: #5C5147;
   --font-display: 'Poppins', -apple-system, sans-serif;
   --font-body: 'Poppins', 'Inter', -apple-system, sans-serif;
+  --font-logo: 'Bodoni Moda', 'Playfair Display', serif;
 }
 
 body {
@@ -179,4 +180,32 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+/* ============================================================
+   FORM INPUT SYSTEM — visible contrast, consistent focus states
+   ============================================================ */
+.soft-pill {
+  border: 1.5px solid rgba(58, 36, 24, 0.09);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(92, 81, 71, 0.55);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.soft-pill:focus-within {
+  outline: 2px solid var(--color-espresso);
+  outline-offset: 2px;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: rgba(58, 36, 24, 0.04);
+  color: var(--color-warmgray);
+  opacity: 1;
 }

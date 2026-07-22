@@ -32,7 +32,7 @@ export function AdminLayout() {
       style={{ background: 'linear-gradient(180deg, #FAF6EF 0%, #EFE7D8 100%)' }}
     >
       <aside className="soft-panel-dark w-full md:w-[240px] shrink-0 flex md:flex-col p-4 md:p-6 items-center md:items-stretch gap-2">
-        <div className="font-display font-black text-2xl text-linen px-2 md:mb-6 shrink-0">RAWW</div>
+        <div className="font-logo text-2xl text-linen px-2 md:mb-6 shrink-0">RAWW</div>
         <nav className="flex md:flex-col gap-1 flex-1 overflow-x-auto">
           {NAV.map((n) => (
             <NavLink

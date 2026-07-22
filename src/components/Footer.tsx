@@ -24,7 +24,7 @@ export function Footer() {
       <div className="max-w-[1400px] mx-auto soft-panel-dark text-linen">
         <div className="px-8 md:px-12 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
           <div>
-            <div className="font-display font-black text-[28px] mb-4">RAWW</div>
+            <div className="font-logo text-[30px] mb-4">RAWW</div>
             <p className="font-body text-sm leading-relaxed text-linen/65 max-w-[280px]">
               Natural fibers, unhurried silhouettes. Pieces made to soften, fade, and stay with you.
             </p>

@@ -89,13 +89,13 @@ export function Header() {
 
       <header className="sticky top-4 z-40 px-4 md:px-8">
         <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-3">
-          {/* Logo badge — fixed circle, matches reference */}
+          {/* Wordmark — plain text, no box, elegant editorial serif */}
           <Link
             to="/"
             aria-label="RAWW home"
-            className="icon-circle soft-pill w-14 h-14 shrink-0 focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-2"
+            className="shrink-0 px-2 focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-4"
           >
-            <span className="font-display font-black text-[13px] text-espresso tracking-tight">RAWW</span>
+            <span className="font-logo text-[26px] md:text-[30px] text-espresso tracking-wide">RAWW</span>
           </Link>
 
           {/* Desktop nav pill */}

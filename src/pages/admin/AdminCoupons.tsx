@@ -97,40 +97,42 @@ export function AdminCoupons() {
       {loading ? (
         <div className="font-body text-warmgray">Loading…</div>
       ) : (
-        <div className="bg-linen/60 rounded-3xl overflow-hidden">
-          <div className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
-            <span>Code</span>
-            <span>Discount</span>
-            <span>Min. Order</span>
-            <span>Used</span>
-            <span>Status</span>
-            <span>Actions</span>
-          </div>
-          {coupons.map((c) => (
-            <div key={c.code} className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0">
-              <span className="font-body text-sm text-espresso font-bold">{c.code}</span>
-              <span className="font-body text-sm text-warmgray">
-                {c.type === 'percentage' ? `${c.amount}%` : `EGP ${c.amount}`}
-              </span>
-              <span className="font-body text-sm text-warmgray">EGP {c.min_order}</span>
-              <span className="font-body text-sm text-warmgray">
-                {c.times_used}
-                {c.usage_limit ? ` / ${c.usage_limit}` : ''}
-              </span>
-              <button
-                onClick={() => toggleActive(c)}
-                className={`font-body text-xs uppercase tracking-wide font-bold w-fit px-3 py-1.5 rounded-full ${
-                  c.active ? 'bg-sage/20 text-sage' : 'bg-warmgray/10 text-warmgray'
-                }`}
-              >
-                {c.active ? 'Active' : 'Disabled'}
-              </button>
-              <button onClick={() => setPendingDelete(c)} className="font-body text-xs text-red-700 underline font-semibold w-fit">
-                Delete
-              </button>
+        <div className="bg-linen/60 rounded-3xl overflow-x-auto">
+          <div className="min-w-[680px]">
+            <div className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
+              <span>Code</span>
+              <span>Discount</span>
+              <span>Min. Order</span>
+              <span>Used</span>
+              <span>Status</span>
+              <span>Actions</span>
             </div>
-          ))}
-          {coupons.length === 0 && <div className="p-6 font-body text-sm text-warmgray">No coupons yet.</div>}
+            {coupons.map((c) => (
+              <div key={c.code} className="grid grid-cols-[1fr_1fr_1fr_0.8fr_0.8fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0">
+                <span className="font-body text-sm text-espresso font-bold">{c.code}</span>
+                <span className="font-body text-sm text-warmgray">
+                  {c.type === 'percentage' ? `${c.amount}%` : `EGP ${c.amount}`}
+                </span>
+                <span className="font-body text-sm text-warmgray">EGP {c.min_order}</span>
+                <span className="font-body text-sm text-warmgray">
+                  {c.times_used}
+                  {c.usage_limit ? ` / ${c.usage_limit}` : ''}
+                </span>
+                <button
+                  onClick={() => toggleActive(c)}
+                  className={`font-body text-xs uppercase tracking-wide font-bold w-fit px-3 py-1.5 rounded-full ${
+                    c.active ? 'bg-sage/20 text-sage' : 'bg-warmgray/10 text-warmgray'
+                  }`}
+                >
+                  {c.active ? 'Active' : 'Disabled'}
+                </button>
+                <button onClick={() => setPendingDelete(c)} className="font-body text-xs text-red-700 underline font-semibold w-fit">
+                  Delete
+                </button>
+              </div>
+            ))}
+            {coupons.length === 0 && <div className="p-6 font-body text-sm text-warmgray">No coupons yet.</div>}
+          </div>
         </div>
       )}
 

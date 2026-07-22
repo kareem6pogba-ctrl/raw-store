@@ -33,7 +33,7 @@ function Field({
         aria-invalid={!!error}
         className={`w-full soft-pill px-5 py-3.5 font-body text-[14.5px] text-espresso outline-none ${
           error ? 'ring-2 ring-red-500' : ''
-        } ${disabled ? 'opacity-60' : ''}`}
+        }`}
       />
       {error && <div className="font-body text-xs text-red-600 mt-1.5 font-medium">{error}</div>}
     </label>

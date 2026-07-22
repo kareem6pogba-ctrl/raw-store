@@ -73,28 +73,30 @@ export function AdminCustomers() {
       ) : customers.length === 0 ? (
         <div className="bg-linen/60 rounded-3xl p-6 font-body text-sm text-warmgray">No customers yet.</div>
       ) : (
-        <div className="bg-linen/60 rounded-3xl overflow-hidden">
-          <div className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
-            <span>Name</span>
-            <span>Email</span>
-            <span>Phone</span>
-            <span>City</span>
-            <span>Orders</span>
-            <span>Total Spent</span>
-          </div>
-          {customers.map((c) => (
-            <div
-              key={c.email + c.name}
-              className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0"
-            >
-              <span className="font-body text-sm text-espresso font-semibold">{c.name}</span>
-              <span className="font-body text-sm text-warmgray truncate">{c.email}</span>
-              <span className="font-body text-sm text-warmgray">{c.phone}</span>
-              <span className="font-body text-sm text-warmgray">{c.city}</span>
-              <span className="font-body text-sm text-warmgray">{c.orderCount}</span>
-              <span className="font-body text-sm text-espresso font-bold">{fmt(c.totalSpent)}</span>
+        <div className="bg-linen/60 rounded-3xl overflow-x-auto">
+          <div className="min-w-[720px]">
+            <div className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3 border-b border-espresso/8 font-body text-[11px] tracking-wide uppercase text-warmgray font-bold">
+              <span>Name</span>
+              <span>Email</span>
+              <span>Phone</span>
+              <span>City</span>
+              <span>Orders</span>
+              <span>Total Spent</span>
             </div>
-          ))}
+            {customers.map((c) => (
+              <div
+                key={c.email + c.name}
+                className="grid grid-cols-[1.4fr_1.4fr_1fr_0.8fr_0.9fr_1fr] gap-4 px-6 py-3.5 border-b border-espresso/8 items-center last:border-0"
+              >
+                <span className="font-body text-sm text-espresso font-semibold">{c.name}</span>
+                <span className="font-body text-sm text-warmgray truncate">{c.email}</span>
+                <span className="font-body text-sm text-warmgray">{c.phone}</span>
+                <span className="font-body text-sm text-warmgray">{c.city}</span>
+                <span className="font-body text-sm text-warmgray">{c.orderCount}</span>
+                <span className="font-body text-sm text-espresso font-bold">{fmt(c.totalSpent)}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
