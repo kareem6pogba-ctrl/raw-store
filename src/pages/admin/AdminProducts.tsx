@@ -28,6 +28,7 @@ export function AdminProducts() {
   const [editing, setEditing] = useState<Product | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [pendingDelete, setPendingDelete] = useState<Product | null>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const load = async () => {
     setLoading(true)
@@ -57,8 +58,13 @@ export function AdminProducts() {
 
   const confirmRemove = async () => {
     if (!pendingDelete) return
-    await supabase.from('products').delete().eq('id', pendingDelete.id)
+    const { error } = await supabase.from('products').delete().eq('id', pendingDelete.id)
+    if (error) {
+      setDeleteError(error.message)
+      return
+    }
     setPendingDelete(null)
+    setDeleteError(null)
     load()
   }
 
@@ -156,11 +162,18 @@ export function AdminProducts() {
       <ConfirmModal
         open={!!pendingDelete}
         title="Delete Product"
-        message={`Delete "${pendingDelete?.name}"? This cannot be undone and will remove it from the live storefront immediately.`}
+        message={
+          deleteError
+            ? `Couldn't delete this product: ${deleteError}`
+            : `Delete "${pendingDelete?.name}"? This cannot be undone and will remove it from the live storefront immediately.`
+        }
         confirmLabel="Delete"
         danger
         onConfirm={confirmRemove}
-        onCancel={() => setPendingDelete(null)}
+        onCancel={() => {
+          setPendingDelete(null)
+          setDeleteError(null)
+        }}
       />
     </div>
   )

@@ -299,3 +299,17 @@ create policy "public read variant gallery" on product_variant_gallery_images
 
 create policy "admin manage variant gallery" on product_variant_gallery_images
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+-- ============================================================
+-- FIX: allow product deletion even after it's been ordered.
+-- order_items.product_id had no ON DELETE rule, so Postgres was
+-- blocking deletion of any product that appears in past order
+-- history. order_items already stores product_name/color/size/
+-- price as a snapshot, so setting product_id to null on delete
+-- loses nothing — order history still displays correctly.
+-- Run this sixth block.
+-- ============================================================
+alter table order_items drop constraint if exists order_items_product_id_fkey;
+alter table order_items
+  add constraint order_items_product_id_fkey
+  foreign key (product_id) references products(id) on delete set null;
