@@ -59,6 +59,23 @@ export function Home() {
                 <LineReveal delay={340}>cloth.</LineReveal>
               </h1>
             </Reveal>
+
+            <Reveal delay={400}>
+              <div className="mt-8 md:max-w-[420px]">
+                <p className="font-body text-[16.5px] leading-relaxed text-warmgray mb-8">
+                  RAWW works in natural fibers and quiet silhouettes — pieces designed to fade,
+                  soften, and belong to you a little more with every season.
+                </p>
+                <div className="flex gap-4 items-center">
+                  <Link to="/shop">
+                    <Button>Shop the Edit</Button>
+                  </Link>
+                  <Link to={`/product/${featured.id}`}>
+                    <Button variant="ghost">View First Piece →</Button>
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
           </div>
 
           <div className="md:col-span-5 md:row-start-1 relative z-0">
@@ -79,23 +96,6 @@ export function Home() {
             </Reveal>
           </div>
         </div>
-
-        <Reveal delay={400}>
-          <div className="md:col-span-7 mt-8 md:mt-10 md:max-w-[420px]">
-            <p className="font-body text-[16.5px] leading-relaxed text-warmgray mb-8">
-              RAWW works in natural fibers and quiet silhouettes — pieces designed to fade,
-              soften, and belong to you a little more with every season.
-            </p>
-            <div className="flex gap-4 items-center">
-              <Link to="/shop">
-                <Button>Shop the Edit</Button>
-              </Link>
-              <Link to={`/product/${featured.id}`}>
-                <Button variant="ghost">View First Piece →</Button>
-              </Link>
-            </div>
-          </div>
-        </Reveal>
       </section>
 
       <section className="max-w-[1400px] mx-auto mt-24 px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-4">
