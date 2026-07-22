@@ -256,3 +256,46 @@ create trigger trg_increment_coupon_usage
   after insert on orders
   for each row
   execute function increment_coupon_usage();
+
+-- ============================================================
+-- PER-COLOR IMAGE VARIANTS — run this fifth block.
+-- Adds a normalized layer on top of the existing products.colors
+-- JSONB field (unchanged) so each color can have its own image
+-- set. Matched to a color by name. Products with no rows here
+-- keep using image_main/image_alt exactly as before — fully
+-- backward compatible, nothing existing is touched or renamed.
+-- ============================================================
+create table if not exists product_color_variants (
+  id uuid primary key default gen_random_uuid(),
+  product_id text references products(id) on delete cascade,
+  color_name text not null,
+  main_image text,
+  hover_image text,
+  video_url text,
+  sort_order int default 0,
+  created_at timestamptz default now(),
+  unique (product_id, color_name)
+);
+
+create table if not exists product_variant_gallery_images (
+  id uuid primary key default gen_random_uuid(),
+  variant_id uuid references product_color_variants(id) on delete cascade,
+  image_url text not null,
+  sort_order int default 0,
+  created_at timestamptz default now()
+);
+
+alter table product_color_variants enable row level security;
+alter table product_variant_gallery_images enable row level security;
+
+create policy "public read variants" on product_color_variants
+  for select using (true);
+
+create policy "admin manage variants" on product_color_variants
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+create policy "public read variant gallery" on product_variant_gallery_images
+  for select using (true);
+
+create policy "admin manage variant gallery" on product_variant_gallery_images
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');

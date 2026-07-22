@@ -3,6 +3,15 @@ export interface ColorOption {
   hex: string
 }
 
+export interface ColorVariant {
+  id: string
+  color_name: string
+  main_image: string | null
+  hover_image: string | null
+  video_url: string | null
+  gallery: string[]
+}
+
 export interface Product {
   id: string
   name: string
@@ -17,6 +26,7 @@ export interface Product {
   tag: string | null
   is_published: boolean
   stock: number
+  variants?: ColorVariant[]
 }
 
 export interface CartItem {

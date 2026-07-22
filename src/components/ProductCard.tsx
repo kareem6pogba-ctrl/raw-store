@@ -1,13 +1,20 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { Product } from '../types'
+import type { ColorOption, Product } from '../types'
 import { useCart } from '../lib/CartContext'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
 
 export function ProductCard({ product }: { product: Product }) {
   const [hover, setHover] = useState(false)
+  const [selectedColor, setSelectedColor] = useState<ColorOption>(product.colors[0])
   const { addToCart } = useCart()
+
+  // Prefer the selected color's own images; fall back to the product default —
+  // keeps working exactly as before for products with no per-color images.
+  const activeVariant = product.variants?.find((v) => v.color_name === selectedColor?.name)
+  const mainImg = activeVariant?.main_image || product.image_main || ''
+  const hoverImg = activeVariant?.hover_image || product.image_alt || ''
 
   return (
     <div
@@ -18,18 +25,20 @@ export function ProductCard({ product }: { product: Product }) {
       <Link to={`/product/${product.id}`} className="focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-4 block">
         <div className="relative aspect-[3.2/4] overflow-hidden bg-beige mb-4 rounded-[22px]">
           <img
-            src={product.image_main ?? ''}
-            alt={product.name}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-out ${
-              hover && product.image_alt ? 'opacity-0' : 'opacity-100'
+            key={mainImg}
+            src={mainImg}
+            alt={`${product.name} — ${selectedColor?.name ?? ''}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out ${
+              hover && hoverImg ? 'opacity-0' : 'opacity-100'
             }`}
           />
-          {product.image_alt && (
+          {hoverImg && (
             <img
-              src={product.image_alt}
+              key={hoverImg}
+              src={hoverImg}
               alt=""
               aria-hidden="true"
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-out ${
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out ${
                 hover ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -52,10 +61,21 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className="flex items-center gap-2 mb-3">
           {product.colors.slice(0, 4).map((c) => (
-            <span
+            <button
               key={c.name}
+              type="button"
               title={c.name}
-              className="w-4 h-4 rounded-full inline-block border-2 border-white shadow-[0_0_0_1px_rgba(58,36,24,0.15)]"
+              aria-label={`View in ${c.name}`}
+              aria-pressed={selectedColor?.name === c.name}
+              onClick={(e) => {
+                e.preventDefault()
+                setSelectedColor(c)
+              }}
+              className={`w-4 h-4 rounded-full inline-block border-2 border-white transition-all focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-2 ${
+                selectedColor?.name === c.name
+                  ? 'shadow-[0_0_0_2px_rgba(58,36,24,0.55)] scale-110'
+                  : 'shadow-[0_0_0_1px_rgba(58,36,24,0.15)]'
+              }`}
               style={{ background: c.hex }}
             />
           ))}
@@ -68,7 +88,7 @@ export function ProductCard({ product }: { product: Product }) {
               e.preventDefault()
               addToCart(
                 product,
-                product.colors[0],
+                selectedColor,
                 product.sizes[Math.floor(product.sizes.length / 2)]
               )
             }}

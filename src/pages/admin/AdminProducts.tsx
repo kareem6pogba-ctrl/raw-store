@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { Button } from '../../components/Button'
 import { ConfirmModal } from '../../components/ConfirmModal'
 import { ImageUploadField } from './ImageUploadField'
+import { ColorVariantManager } from './ColorVariantManager'
 import type { Product } from '../../types'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
@@ -243,6 +244,24 @@ function ProductForm({
             />
             <span className="font-body text-sm text-espresso font-medium">Published (visible on live site)</span>
           </label>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-espresso/8">
+          <div className="font-body text-[13px] tracking-wide uppercase text-espresso font-bold mb-1">
+            Per-Color Images
+          </div>
+          {isNew ? (
+            <div className="font-body text-sm text-warmgray bg-linen/60 rounded-2xl p-5 mt-3">
+              Save this product first — then reopen it here to add a dedicated image set for each color.
+            </div>
+          ) : (
+            <>
+              <p className="font-body text-xs text-warmgray mb-4">
+                Optional. Colors without their own images fall back to the Main/Alternate images above.
+              </p>
+              <ColorVariantManager productId={form.id} colors={form.colors} />
+            </>
+          )}
         </div>
 
         <div className="flex gap-3.5 mt-8">

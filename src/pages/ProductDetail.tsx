@@ -7,7 +7,7 @@ import { Reveal } from '../components/Reveal'
 import { useProducts } from '../lib/useProducts'
 import { useCart } from '../lib/CartContext'
 import { SkeletonProductDetail } from '../components/Skeleton'
-import type { ColorOption } from '../types'
+import type { ColorOption, ColorVariant } from '../types'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
 
@@ -25,12 +25,34 @@ export function ProductDetail() {
   const [added, setAdded] = useState(false)
   const [tab, setTab] = useState<string | null>('details')
 
+  // The variant matching the selected color, if this product has per-color images.
+  // Falls back to the product's default image_main/image_alt when absent —
+  // existing products with no variants keep working exactly as before.
+  const activeVariant: ColorVariant | undefined = product?.variants?.find(
+    (v) => v.color_name === color?.name
+  )
+  const hasVariantImages = !!(activeVariant?.main_image || activeVariant?.gallery.length)
+  const galleryImages = hasVariantImages
+    ? [activeVariant?.main_image, activeVariant?.hover_image, ...(activeVariant?.gallery ?? [])].filter(
+        (v, i, arr): v is string => !!v && arr.indexOf(v) === i
+      )
+    : [product?.image_main, product?.image_alt].filter((v): v is string => !!v)
+
+  const selectColor = (c: ColorOption) => {
+    setColor(c)
+    const variant = product?.variants?.find((v) => v.color_name === c.name)
+    const nextMain = variant?.main_image || product?.image_main || ''
+    setImg(nextMain)
+  }
+
   useEffect(() => {
     if (product) {
-      setColor(product.colors[0])
+      const initialColor = product.colors[0]
+      setColor(initialColor)
+      const initialVariant = product.variants?.find((v) => v.color_name === initialColor?.name)
+      setImg(initialVariant?.main_image || product.image_main || '')
       setSize(null)
       setQty(1)
-      setImg(product.image_main ?? '')
       setAdded(false)
     }
   }, [product])
@@ -74,18 +96,18 @@ export function ProductDetail() {
       <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-10">
         <Reveal>
           <Deckle style={{ aspectRatio: '3.4/4' }} className="overflow-hidden bg-beige mb-4">
-            <img src={img} alt={product.name} className="w-full h-full object-cover" />
+            <img key={img} src={img} alt={product.name} className="page-transition w-full h-full object-cover" />
           </Deckle>
-          <div className="flex gap-3">
-            {[product.image_main, product.image_alt].filter(Boolean).map((src, idx) => (
+          <div className="flex gap-3 flex-wrap">
+            {galleryImages.map((src, idx) => (
               <button
                 key={src}
-                onClick={() => setImg(src as string)}
+                onClick={() => setImg(src)}
                 className={`w-[78px] h-24 rounded-2xl overflow-hidden transition-all ${
                   img === src ? 'ring-2 ring-espresso' : 'opacity-60 hover:opacity-100'
                 }`}
               >
-                <img src={src as string} alt={`${product.name} — view ${idx + 1}`} className="w-full h-full object-cover" />
+                <img src={src} alt={`${product.name} — view ${idx + 1}`} className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
@@ -117,7 +139,7 @@ export function ProductDetail() {
                 {product.colors.map((c) => (
                   <button
                     key={c.name}
-                    onClick={() => setColor(c)}
+                    onClick={() => selectColor(c)}
                     title={c.name}
                     className={`w-9 h-9 rounded-full border-2 border-white transition-all ${
                       color?.name === c.name ? 'ring-2 ring-espresso ring-offset-2' : 'shadow-[0_0_0_1px_rgba(58,36,24,0.15)]'
