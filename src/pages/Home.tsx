@@ -43,7 +43,7 @@ export function Home() {
   return (
     <div>
       <section className="relative max-w-[1400px] mx-auto px-4 md:px-8 pt-8 md:pt-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-start">
           <div className="md:col-span-7 md:row-start-1 relative z-10">
             <Reveal>
               <div className="inline-block soft-pill px-4 py-1.5 mb-6">
