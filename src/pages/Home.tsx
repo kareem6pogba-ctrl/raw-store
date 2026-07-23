@@ -46,7 +46,7 @@ export function Home() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
           <div className="md:col-span-7 md:row-start-1 relative z-10">
             <Reveal>
-              <div className="inline-block soft-pill px-4 py-1.5 mb-6">
+              <div className="md:hidden inline-block soft-pill px-4 py-1.5 mb-6">
                 <span className="font-body text-[11px] tracking-[0.18em] uppercase text-espresso font-medium">
                   New Arrival — The First Chapter
                 </span>
