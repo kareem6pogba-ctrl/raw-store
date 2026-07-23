@@ -43,8 +43,8 @@ export function Home() {
   return (
     <div>
       <section className="relative max-w-[1400px] mx-auto px-4 md:px-8 pt-8 md:pt-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-[auto_auto] gap-4 md:gap-x-6 md:gap-y-3 items-start">
-          <div className="md:col-span-7 md:col-start-1 md:row-start-1 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-end">
+          <div className="md:col-span-7 md:row-start-1 relative z-10">
             <Reveal>
               <div className="inline-block soft-pill px-4 py-1.5 mb-6">
                 <span className="font-body text-[11px] tracking-[0.18em] uppercase text-espresso font-medium">
@@ -61,7 +61,7 @@ export function Home() {
             </Reveal>
           </div>
 
-          <div className="md:col-span-5 md:col-start-8 md:row-start-1 md:row-span-2 relative z-0">
+          <div className="md:col-span-5 md:row-start-1 relative z-0">
             <Reveal delay={150}>
               <div className="relative">
                 <Deckle style={{ aspectRatio: '4/5' }} className="overflow-hidden bg-beige">
@@ -78,24 +78,24 @@ export function Home() {
               </div>
             </Reveal>
           </div>
-
-          <Reveal delay={400}>
-            <div className="md:col-span-7 md:col-start-1 md:row-start-2 mt-8 md:mt-0 md:max-w-[420px]">
-              <p className="font-body text-[16.5px] leading-relaxed text-warmgray mb-8">
-                RAWW works in natural fibers and quiet silhouettes — pieces designed to fade,
-                soften, and belong to you a little more with every season.
-              </p>
-              <div className="flex gap-4 items-center">
-                <Link to="/shop">
-                  <Button>Shop the Edit</Button>
-                </Link>
-                <Link to={`/product/${featured.id}`}>
-                  <Button variant="ghost">View First Piece →</Button>
-                </Link>
-              </div>
-            </div>
-          </Reveal>
         </div>
+
+        <Reveal delay={400}>
+          <div className="md:col-span-7 mt-8 md:mt-10 md:max-w-[420px]">
+            <p className="font-body text-[16.5px] leading-relaxed text-warmgray mb-8">
+              RAWW works in natural fibers and quiet silhouettes — pieces designed to fade,
+              soften, and belong to you a little more with every season.
+            </p>
+            <div className="flex gap-4 items-center">
+              <Link to="/shop">
+                <Button>Shop the Edit</Button>
+              </Link>
+              <Link to={`/product/${featured.id}`}>
+                <Button variant="ghost">View First Piece →</Button>
+              </Link>
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       <section className="max-w-[1400px] mx-auto mt-24 px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-4">
