@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export function Privacy() {
   return (
     <div className="max-w-[860px] mx-auto px-4 md:px-8 pt-10 pb-24">
@@ -70,42 +72,27 @@ export function Contact() {
 }
 
 export function SizeGuide() {
-  const rows = [
-    { size: 'XS', bust: '80–84', waist: '62–66', hip: '88–92' },
-    { size: 'S', bust: '85–89', waist: '67–71', hip: '93–97' },
-    { size: 'M', bust: '90–94', waist: '72–76', hip: '98–102' },
-    { size: 'L', bust: '95–99', waist: '77–81', hip: '103–107' },
-    { size: 'XL', bust: '100–104', waist: '82–86', hip: '108–112' },
-  ]
   return (
     <div className="max-w-[860px] mx-auto px-4 md:px-8 pt-10 pb-24">
       <div className="font-body text-xs tracking-[0.22em] uppercase text-sage font-bold mb-3.5">Help</div>
-      <h1 className="text-mega text-espresso text-[clamp(34px,5vw,50px)] mb-4">Size Guide</h1>
-      <p className="font-body text-[15px] text-warmgray mb-8">
-        All measurements in centimeters, taken directly on the body.
-      </p>
-      <div className="soft-panel p-6 overflow-hidden">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              {['Size', 'Bust', 'Waist', 'Hip'].map((h) => (
-                <th key={h} className="text-left font-body text-xs tracking-wide uppercase text-espresso font-bold py-3 px-3">
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.size} className="border-t border-espresso/8">
-                <td className="py-3.5 px-3 font-body text-sm text-espresso font-bold">{r.size}</td>
-                <td className="py-3.5 px-3 font-body text-sm text-warmgray">{r.bust}</td>
-                <td className="py-3.5 px-3 font-body text-sm text-warmgray">{r.waist}</td>
-                <td className="py-3.5 px-3 font-body text-sm text-warmgray">{r.hip}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <h1 className="text-mega text-espresso text-[clamp(34px,5vw,50px)] mb-6">One Size, Carefully Considered</h1>
+      <div className="soft-panel p-8">
+        <p className="font-body text-[15px] leading-loose text-warmgray mb-5">
+          Every RAWW piece is made in a single, considered size — not a range of sizes cut from
+          the same pattern, but one silhouette designed with a specific fit in mind.
+        </p>
+        <p className="font-body text-[15px] leading-loose text-warmgray mb-5">
+          Rather than S, M, L, or XL, each product page shows a recommended weight and height
+          range. This isn't a strict rule — it's a guide to help you understand the fit the
+          piece was designed for, so you can decide with confidence before you buy.
+        </p>
+        <p className="font-body text-[15px] leading-loose text-warmgray">
+          If you're between ranges or unsure, reach out on our{' '}
+          <Link to="/contact" className="text-sage underline font-semibold">
+            Contact page
+          </Link>{' '}
+          — we're happy to help you find the right piece.
+        </p>
       </div>
     </div>
   )

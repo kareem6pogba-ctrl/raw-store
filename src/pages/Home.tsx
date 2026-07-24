@@ -120,7 +120,7 @@ export function Home() {
           { t: 'Natural Fibers', d: 'Cotton, linen, and undyed cloth chosen for how it feels, not just how it looks.' },
           { t: 'Made to Fade Well', d: 'Every wash, every wear adds character rather than wear-out.' },
           { t: 'Small Batches', d: 'Cut in limited runs so the details stay considered.' },
-          { t: 'Cairo, Handled with Care', d: 'Designed and finished in Cairo, shipped nationwide.' },
+          { t: 'One Size, Carefully Considered', d: 'Each piece is cut for a specific fit — a recommended weight and height range guides you to the piece it was made for.' },
         ].map((v, i) => (
           <Reveal key={v.t} delay={i * 80}>
             <div className="soft-panel p-5 h-full">

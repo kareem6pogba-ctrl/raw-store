@@ -27,6 +27,10 @@ export interface Product {
   is_published: boolean
   stock: number
   variants?: ColorVariant[]
+  min_weight_kg: number | null
+  max_weight_kg: number | null
+  min_height_cm: number | null
+  max_height_cm: number | null
 }
 
 export interface CartItem {

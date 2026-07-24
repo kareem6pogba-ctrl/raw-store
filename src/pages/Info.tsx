@@ -1,5 +1,5 @@
 const FAQS = [
-  { q: 'How do I find my size?', a: 'Check the Size Guide link on any product page — measurements are given in cm alongside garment fit notes.' },
+  { q: 'What size are RAWW pieces?', a: 'Every RAWW piece is One Size — each design is cut for a specific fit rather than a range. The recommended weight and height range is shown directly on each product page to help you find the right piece.' },
   { q: 'Do colors vary between pieces?', a: 'Yes — undyed and naturally dyed pieces carry slight, intentional variation. That is part of the material, not a flaw.' },
   { q: 'How long does delivery take?', a: '2–4 business days across Egypt. Orders over EGP 1,500 ship free.' },
   { q: 'What is your return policy?', a: 'Unworn pieces with tags attached may be returned within 14 days of delivery for a full refund.' },

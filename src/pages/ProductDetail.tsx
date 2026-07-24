@@ -10,6 +10,7 @@ import { SkeletonProductDetail } from '../components/Skeleton'
 import type { ColorOption, ColorVariant } from '../types'
 
 const fmt = (n: number) => `EGP ${n.toLocaleString()}`
+const ONE_SIZE = 'One Size'
 
 export function ProductDetail() {
   const { id } = useParams()
@@ -19,7 +20,6 @@ export function ProductDetail() {
   const product = products.find((p) => p.id === id)
 
   const [color, setColor] = useState<ColorOption | null>(null)
-  const [size, setSize] = useState<string | null>(null)
   const [qty, setQty] = useState(1)
   const [img, setImg] = useState<string>('')
   const [added, setAdded] = useState(false)
@@ -38,6 +38,19 @@ export function ProductDetail() {
       )
     : [product?.image_main, product?.image_alt].filter((v): v is string => !!v)
 
+  const fitRange = product
+    ? [
+        product.min_weight_kg != null && product.max_weight_kg != null
+          ? `${product.min_weight_kg}–${product.max_weight_kg} kg`
+          : null,
+        product.min_height_cm != null && product.max_height_cm != null
+          ? `${product.min_height_cm}–${product.max_height_cm} cm`
+          : null,
+      ]
+        .filter(Boolean)
+        .join(' · ')
+    : ''
+
   const selectColor = (c: ColorOption) => {
     setColor(c)
     const variant = product?.variants?.find((v) => v.color_name === c.name)
@@ -51,7 +64,6 @@ export function ProductDetail() {
       setColor(initialColor)
       const initialVariant = product.variants?.find((v) => v.color_name === initialColor?.name)
       setImg(initialVariant?.main_image || product.image_main || '')
-      setSize(null)
       setQty(1)
       setAdded(false)
     }
@@ -75,8 +87,8 @@ export function ProductDetail() {
   const related = products.filter((p) => p.id !== product.id && p.category === product.category).slice(0, 3)
 
   const handleAdd = () => {
-    if (!size || !color) return
-    addToCart(product, color, size, qty)
+    if (!color) return
+    addToCart(product, color, ONE_SIZE, qty)
     setAdded(true)
     setTimeout(() => setAdded(false), 2200)
   }
@@ -151,28 +163,17 @@ export function ProductDetail() {
             </div>
 
             <div className="mb-7">
-              <div className="flex justify-between mb-3">
-                <span className="font-body text-[12.5px] tracking-wide uppercase text-espresso font-bold">
-                  Size {size ? `— ${size}` : ''}
+              <span className="font-body text-[12.5px] tracking-wide uppercase text-espresso font-bold">
+                Size
+              </span>
+              <div className="mt-3 soft-pill inline-flex flex-col items-start px-5 py-3.5">
+                <span className="font-body text-[13px] font-bold tracking-wide uppercase text-espresso">
+                  One Size
                 </span>
-                <Link to="/size-guide" className="font-body text-[12.5px] text-sage underline font-semibold focus-visible:outline-2 focus-visible:outline-sage">
-                  Size Guide
-                </Link>
+                {fitRange && (
+                  <span className="font-body text-[12px] text-warmgray mt-0.5">{fitRange}</span>
+                )}
               </div>
-              <div className="flex gap-2 flex-wrap">
-                {product.sizes.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setSize(s)}
-                    className={`min-w-[48px] h-[48px] font-body text-[13px] font-bold rounded-full transition-all ${
-                      size === s ? 'bg-espresso text-linen' : 'soft-pill text-espresso'
-                    }`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-              {!size && <div className="font-body text-xs text-sage mt-2 font-medium">Select a size to continue</div>}
             </div>
 
             <div className="flex gap-3 mb-4">

@@ -89,7 +89,7 @@ export function ProductCard({ product }: { product: Product }) {
               addToCart(
                 product,
                 selectedColor,
-                product.sizes[Math.floor(product.sizes.length / 2)]
+                'One Size'
               )
             }}
             className="soft-pill flex items-center gap-1.5 px-4 py-2.5 text-espresso text-[11.5px] font-bold tracking-wide uppercase focus-visible:outline-2 focus-visible:outline-espresso focus-visible:outline-offset-2 active:scale-95 transition-transform"

@@ -313,3 +313,16 @@ alter table order_items drop constraint if exists order_items_product_id_fkey;
 alter table order_items
   add constraint order_items_product_id_fkey
   foreign key (product_id) references products(id) on delete set null;
+
+-- ============================================================
+-- ONE SIZE FIT RANGE — run this seventh block.
+-- Adds optional recommended-fit fields to products. The existing
+-- `sizes` column is left completely untouched (still there, still
+-- populated) so nothing about existing products or past orders
+-- breaks. New products going forward use these fields instead of
+-- a size list; the storefront always shows "One Size."
+-- ============================================================
+alter table products add column if not exists min_weight_kg numeric;
+alter table products add column if not exists max_weight_kg numeric;
+alter table products add column if not exists min_height_cm numeric;
+alter table products add column if not exists max_height_cm numeric;

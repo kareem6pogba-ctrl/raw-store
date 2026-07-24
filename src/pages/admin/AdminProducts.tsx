@@ -16,10 +16,14 @@ const BLANK: Omit<Product, 'is_published' | 'stock'> = {
   description: '',
   fabric: '',
   colors: [{ name: 'Ivory', hex: '#F4EDE2' }],
-  sizes: ['S', 'M', 'L'],
+  sizes: ['One Size'],
   image_main: '',
   image_alt: '',
   tag: null,
+  min_weight_kg: null,
+  max_weight_kg: null,
+  min_height_cm: null,
+  max_height_cm: null,
 }
 
 export function AdminProducts() {
@@ -77,12 +81,16 @@ export function AdminProducts() {
       description: p.description,
       fabric: p.fabric,
       colors: p.colors,
-      sizes: p.sizes,
+      sizes: ['One Size'],
       image_main: p.image_main,
       image_alt: p.image_alt,
       tag: p.tag || null,
       is_published: p.is_published,
       stock: p.stock,
+      min_weight_kg: p.min_weight_kg,
+      max_weight_kg: p.max_weight_kg,
+      min_height_cm: p.min_height_cm,
+      max_height_cm: p.max_height_cm,
     }
     if (isNew) {
       await supabase.from('products').insert(payload)
@@ -222,11 +230,43 @@ function ProductForm({
           <ImageUploadField label="Main Image" value={form.image_main ?? ''} onChange={(v) => set('image_main', v)} />
           <ImageUploadField label="Alternate/Hover Image" value={form.image_alt ?? ''} onChange={(v) => set('image_alt', v)} />
           <TextField label="Tag (e.g. New, Best Seller — optional)" value={form.tag ?? ''} onChange={(v) => set('tag', v)} />
-          <TextField
-            label="Sizes (comma-separated)"
-            value={form.sizes.join(', ')}
-            onChange={(v) => set('sizes', v.split(',').map((s) => s.trim()).filter(Boolean))}
-          />
+          <div>
+            <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">
+              Size — Every RAWW piece is One Size
+            </div>
+            <div className="soft-pill px-4 py-3 font-body text-sm text-espresso mb-3 inline-block">
+              One Size
+            </div>
+            <div className="font-body text-[11px] text-warmgray mb-2.5">
+              Recommended fit range shown to customers on the product page (optional)
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <TextField
+                label="Min Weight (kg)"
+                type="number"
+                value={form.min_weight_kg != null ? String(form.min_weight_kg) : ''}
+                onChange={(v) => set('min_weight_kg', v === '' ? null : Number(v))}
+              />
+              <TextField
+                label="Max Weight (kg)"
+                type="number"
+                value={form.max_weight_kg != null ? String(form.max_weight_kg) : ''}
+                onChange={(v) => set('max_weight_kg', v === '' ? null : Number(v))}
+              />
+              <TextField
+                label="Min Height (cm)"
+                type="number"
+                value={form.min_height_cm != null ? String(form.min_height_cm) : ''}
+                onChange={(v) => set('min_height_cm', v === '' ? null : Number(v))}
+              />
+              <TextField
+                label="Max Height (cm)"
+                type="number"
+                value={form.max_height_cm != null ? String(form.max_height_cm) : ''}
+                onChange={(v) => set('max_height_cm', v === '' ? null : Number(v))}
+              />
+            </div>
+          </div>
           <div>
             <div className="font-body text-[11.5px] tracking-wide uppercase text-warmgray font-bold mb-2">
               Colors (name:hex, comma-separated — e.g. Ivory:#F4EDE2, Sage:#7A8471)
