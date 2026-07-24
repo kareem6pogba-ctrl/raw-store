@@ -88,7 +88,7 @@ export function Header() {
       </div>
 
       <header className="sticky top-4 z-40 px-4 md:px-8">
-        <div className="max-w-[1280px] mx-auto glass rounded-full shadow-[0_8px_32px_-12px_rgba(58,36,24,0.18)]">
+        <div className="max-w-[1280px] mx-auto glass rounded-[34px] shadow-[0_8px_32px_-12px_rgba(58,36,24,0.18)]">
           <div className="flex items-center justify-between gap-3 px-4 md:px-6 h-[68px]">
             {/* Wordmark — sits on the glass bar, always readable regardless of page content */}
             <Link
