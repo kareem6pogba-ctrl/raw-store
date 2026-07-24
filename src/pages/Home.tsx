@@ -115,7 +115,7 @@ export function Home() {
         </Reveal>
       </section>
 
-      <section className="max-w-[1400px] mx-auto mt-24 px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section className="max-w-[1400px] mx-auto mt-24 px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
           { t: 'Natural Fibers', d: 'Cotton, linen, and undyed cloth chosen for how it feels, not just how it looks.' },
           { t: 'Made to Fade Well', d: 'Every wash, every wear adds character rather than wear-out.' },

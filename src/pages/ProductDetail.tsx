@@ -166,12 +166,12 @@ export function ProductDetail() {
               <span className="font-body text-[12.5px] tracking-wide uppercase text-espresso font-bold">
                 Size
               </span>
-              <div className="mt-3 soft-pill inline-flex flex-col items-start px-5 py-3.5">
-                <span className="font-body text-[13px] font-bold tracking-wide uppercase text-espresso">
+              <div className="mt-2.5 flex items-center gap-2.5 flex-wrap">
+                <span className="bg-espresso/6 text-espresso font-body text-[11px] font-bold tracking-wide uppercase px-3 py-1.5 rounded-full">
                   One Size
                 </span>
                 {fitRange && (
-                  <span className="font-body text-[12px] text-warmgray mt-0.5">{fitRange}</span>
+                  <span className="font-body text-[12.5px] text-warmgray">{fitRange}</span>
                 )}
               </div>
             </div>
