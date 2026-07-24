@@ -179,7 +179,7 @@ export function Header() {
                   placeholder="Search for pieces, fabrics, colors…"
                   aria-label="Search products"
                   aria-autocomplete="list"
-                  className="flex-1 bg-transparent outline-none font-body text-[15px] text-espresso"
+                  className="search-input flex-1 bg-transparent outline-none font-body text-[15px] text-espresso"
                 />
               </div>
               {suggestions.length > 0 && (

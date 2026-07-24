@@ -202,6 +202,16 @@ select:focus-visible,
   outline-offset: 2px;
 }
 
+/* Search field sits directly in the glass header with no border of its own —
+   the boxy outline looked heavy there, so use a soft underline instead. */
+.search-input {
+  border-bottom: 1.5px solid transparent;
+}
+.search-input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--color-espresso);
+}
+
 input:disabled,
 textarea:disabled,
 select:disabled {
